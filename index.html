@@ -2,136 +2,299 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Подбор букета с помощью ИИ</title>
+  <title>Atelier Bouquet · AI-подбор букета</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #ffe7f2 0%, #fdf5f0 40%, #f5f0ff 100%);
+      --accent-main: #f58ba8;
+      --accent-soft: #fbcfdc;
+      --accent-gold: #d9b37a;
+      --text-main: #1f2933;
+      --text-soft: #6b7280;
+      --border-soft: rgba(255, 255, 255, 0.7);
+      --glass-bg: rgba(255, 255, 255, 0.32);
+      --glass-strong: rgba(255, 255, 255, 0.58);
+      --shadow-soft: 0 26px 80px rgba(15, 23, 42, 0.28);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
     }
 
     body {
-      background: radial-gradient(circle at top left, #ffe5f1, #f3f4f6);
       min-height: 100vh;
-      color: #111827;
       display: flex;
       justify-content: center;
+      align-items: stretch;
       padding: 24px;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: var(--bg-gradient);
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .app {
-      max-width: 1100px;
-      width: 100%;
-      background: #ffffffdd;
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.15);
-      padding: 28px 24px 32px;
-    }
-
-    @media (min-width: 768px) {
-      .app {
-        padding: 32px 40px 40px;
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
       }
     }
 
-    .header {
+    .floral-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(36px);
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: soft-light;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.3s ease-out;
+    }
+
+    .floral-orb--pink {
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, #ffd5e5 0%, #fbcfdc 40%, transparent 70%);
+      top: -60px;
+      left: -40px;
+    }
+
+    .floral-orb--lavender {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, #e2d6ff 0%, #cabffd 35%, transparent 70%);
+      bottom: -40px;
+      right: 0;
+    }
+
+    .floral-orb--peach {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, #ffe4c4 0%, #faccb5 40%, transparent 70%);
+      top: 40%;
+      right: 50%;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1180px;
+      background: var(--glass-bg);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(26px) saturate(140%);
+      padding: 22px 18px 26px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell {
+        padding: 26px 32px 32px;
+      }
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.62),
+        rgba(255, 255, 255, 0.34)
+      );
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 16px 34px rgba(148, 163, 184, 0.35);
+      margin-bottom: 22px;
+      backdrop-filter: blur(26px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: conic-gradient(from 160deg, #fbcfdc, #fce7f3, #e4ddff, #fde1d0, #fbcfdc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 26px rgba(248, 113, 150, 0.5);
+      font-size: 18px;
+    }
+
+    .brand-titles {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 1px;
     }
 
-    .badge {
+    .brand-name {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+    }
+
+    .header-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      padding: 4px 10px;
+      gap: 6px;
+      padding: 4px 11px;
       border-radius: 999px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      color: #6b7280;
-      width: fit-content;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      font-size: 11px;
+      color: var(--text-soft);
+      white-space: nowrap;
     }
 
-    .badge-dot {
+    .header-pill-dot {
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: #10b981;
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
     }
 
-    h1 {
-      font-size: 24px;
-      line-height: 1.2;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 30px;
+    @media (max-width: 640px) {
+      .app-header {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
 
-    .subtitle {
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #f9739a, #f59e0b, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
       font-size: 14px;
-      color: #6b7280;
-      max-width: 560px;
+      color: var(--text-soft);
+      max-width: 620px;
+    }
+
+    .hero-subtitle strong {
+      font-weight: 600;
+      color: #4b5563;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: 1.1fr 1.3fr;
-      gap: 24px;
-      margin-top: 8px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.3fr);
+      gap: 20px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
     .panel {
-      background: #f9fafb;
-      border-radius: 18px;
-      padding: 16px 16px 18px;
-      border: 1px solid #e5e7eb;
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.88),
+        rgba(255, 255, 255, 0.74)
+      );
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 18px 16px 18px;
+      box-shadow: 0 18px 46px rgba(148, 163, 184, 0.25);
+      position: relative;
+      overflow: hidden;
     }
 
-    .panel-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
+    .panel--results {
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.95),
+        rgba(255, 250, 252, 0.9)
+      );
+    }
+
+    @media (min-width: 960px) {
+      .panel {
+        padding: 20px 20px 22px;
+      }
+    }
+
+    .panel-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .panel-title span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .panel-title-tag {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #eef2ff;
-      color: #3730a3;
-    }
-
-    label {
+    .panel-title {
       font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4b5563;
+    }
+
+    .panel-chip {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(250, 232, 255, 0.9);
+      color: #6d28d9;
+      border: 1px solid rgba(237, 233, 254, 0.9);
+      white-space: nowrap;
+    }
+
+    .input-label {
+      font-size: 12px;
       font-weight: 500;
-      display: block;
+      color: #4b5563;
       margin-bottom: 6px;
     }
 
@@ -142,25 +305,64 @@
 
     textarea {
       width: 100%;
-      min-height: 120px;
+      min-height: 130px;
       resize: vertical;
-      border-radius: 14px;
-      border: 1px solid #d1d5db;
-      padding: 10px 12px 34px;
+      border-radius: 20px;
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      padding: 12px 14px 40px;
       font-size: 14px;
+      font-family: inherit;
       outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-      background: #ffffff;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.98),
+        rgba(255, 251, 254, 0.96)
+      );
+      box-shadow: inset 0 0 0 0 rgba(248, 113, 150, 0);
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        transform 0.12s ease-out;
     }
 
     textarea:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2);
-      background: #ffffff;
+      border-color: rgba(248, 113, 150, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(248, 113, 150, 0.25),
+        0 18px 40px rgba(248, 113, 150, 0.18);
+      transform: translateY(-1px);
     }
 
     textarea::placeholder {
+      color: #c4c4cf;
+    }
+
+    .typing-hint {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      font-size: 11px;
       color: #9ca3af;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+      transition: opacity 0.18s ease-out;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #f9739a;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
     }
 
     .hint {
@@ -175,6 +377,7 @@
       justify-content: space-between;
       gap: 8px;
       margin-top: 6px;
+      flex-wrap: wrap;
     }
 
     .examples {
@@ -186,40 +389,63 @@
 
     .example {
       font-size: 11px;
-      padding: 5px 8px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: #e5e7eb;
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      background: rgba(249, 250, 251, 0.9);
       color: #4b5563;
-      border: none;
       cursor: pointer;
-      transition: background 0.15s, transform 0.08s;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out;
       white-space: nowrap;
     }
 
     .example:hover {
-      background: #d1d5db;
+      background: #fef2f7;
+      border-color: rgba(248, 113, 150, 0.55);
       transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(248, 113, 150, 0.22);
     }
 
     button.primary {
       border: none;
-      border-radius: 999px;
-      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      padding: 9px 20px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #ec4899);
-      color: white;
+      background-image: linear-gradient(135deg, #f9739a, #fbbfcd, #faccd7);
+      color: #1f2933;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
-      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, filter 0.1s;
+      gap: 8px;
+      box-shadow:
+        0 12px 28px rgba(248, 113, 150, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.5);
+      transition:
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out,
+        filter 0.14s ease-out;
     }
 
-    button.primary:active {
+    button.primary .sparkles {
+      font-size: 16px;
+    }
+
+    button.primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow:
+        0 16px 40px rgba(248, 113, 150, 0.38),
+        0 0 0 1px rgba(255, 255, 255, 0.7);
+      filter: brightness(1.03);
+    }
+
+    button.primary:active:not(:disabled) {
       transform: translateY(1px) scale(0.99);
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 8px 18px rgba(248, 113, 150, 0.32);
       filter: brightness(0.98);
     }
 
@@ -229,12 +455,8 @@
       box-shadow: none;
     }
 
-    .sparkles {
-      font-size: 16px;
-    }
-
     .status {
-      font-size: 12px;
+      font-size: 11px;
       color: #6b7280;
       display: flex;
       align-items: center;
@@ -242,17 +464,22 @@
     }
 
     .status-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: #22c55e;
+    }
+
+    .status-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
     .results-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 12px;
       margin-bottom: 12px;
     }
 
@@ -270,121 +497,206 @@
     .results-debug {
       font-size: 11px;
       color: #4b5563;
-      margin-bottom: 6px;
-      border-left: 2px solid #c7d2fe;
-      padding-left: 8px;
+      margin-bottom: 8px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: rgba(239, 246, 255, 0.9);
+      border: 1px dashed rgba(191, 219, 254, 0.8);
     }
 
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1px solid #e5e7eb;
-      padding: 10px 10px 11px;
+    .bouquet-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      border: 1px solid rgba(243, 244, 246, 0.9);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+    }
+
+    .bouquet-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 50px rgba(148, 163, 184, 0.45);
+      border-color: rgba(248, 113, 150, 0.42);
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.98),
+        rgba(255, 246, 252, 0.98)
+      );
+    }
+
+    .bouquet-image-wrapper {
+      position: relative;
+      height: 170px;
+      background: radial-gradient(circle at top, #fed7e2, #e0f2fe);
+      overflow: hidden;
+    }
+
+    .bouquet-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform-origin: center;
+      transition: transform 0.5s ease-out;
+    }
+
+    .bouquet-card:hover .bouquet-image {
+      transform: scale(1.04);
+    }
+
+    .bouquet-chip {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      color: #4b5563;
+      backdrop-filter: blur(20px);
+    }
+
+    .bouquet-chip--ai {
+      right: 10px;
+      left: auto;
+      background: linear-gradient(120deg, rgba(251, 191, 36, 0.12), rgba(248, 113, 150, 0.3));
+      color: #7c2d12;
+      border-color: rgba(251, 191, 36, 0.5);
+    }
+
+    .bouquet-card-body {
+      padding: 10px 12px 11px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s;
-      cursor: pointer;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
-      border-color: #c7d2fe;
-    }
-
-    .card-main {
+    .bouquet-card-header {
       display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
       gap: 8px;
     }
 
-    .thumb {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #fecaca, #f9a8d4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+    .bouquet-name {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 15px;
+      line-height: 1.2;
     }
 
-    .card-body {
-      flex: 1;
+    .bouquet-price-block {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      align-items: flex-end;
+      gap: 3px;
+      font-size: 11px;
     }
 
-    .card-title {
-      font-size: 14px;
+    .bouquet-price {
       font-weight: 600;
+      font-size: 14px;
     }
 
-    .card-desc {
+    .score-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #6b7280;
+    }
+
+    .score-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #f9739a, #a855f7);
+    }
+
+    .bouquet-desc {
       font-size: 12px;
       color: #6b7280;
     }
 
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .price {
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .badge-small {
-      font-size: 10px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: #eef2ff;
-      color: #4338ca;
-    }
-
-    .score-badge {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .tags {
+    .bouquet-tags-row {
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
+      margin-top: 2px;
     }
 
     .tag {
       font-size: 10px;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 999px;
       background: #f3f4f6;
       color: #6b7280;
     }
 
+    .tag--flowers {
+      background: rgba(253, 242, 248, 0.95);
+      color: #9d174d;
+    }
+
+    .tag--style {
+      background: rgba(237, 233, 254, 0.96);
+      color: #4c1d95;
+    }
+
+    .tag--occasion {
+      background: rgba(255, 247, 237, 0.96);
+      color: #7c2d12;
+    }
+
+    .bouquet-ai-row {
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #4c1d95;
+    }
+
+    .ai-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(237, 233, 254, 0.9);
+      border: 1px solid rgba(221, 214, 254, 0.9);
+      backdrop-filter: blur(16px);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #5b21b6;
+      white-space: nowrap;
+    }
+
+    .ai-reason-text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
     .card-composition {
       font-size: 11px;
       color: #4b5563;
-      margin-top: 4px;
-      padding-top: 4px;
+      margin-top: 6px;
+      padding-top: 5px;
       border-top: 1px dashed #e5e7eb;
       display: none;
-    }
-
-    .match-reason {
-      font-size: 11px;
-      color: #4c1d95;
-      margin-top: 4px;
     }
 
     .composition-hint {
@@ -396,15 +708,15 @@
     .empty-state {
       font-size: 13px;
       color: #6b7280;
-      padding: 8px;
-      border-radius: 12px;
-      border: 1px dashed #d1d5db;
-      background: #f9fafb;
+      padding: 9px 10px;
+      border-radius: 16px;
+      border: 1px dashed rgba(209, 213, 219, 0.9);
+      background: rgba(249, 250, 251, 0.95);
       margin-top: 8px;
     }
 
     .footer-note {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 11px;
       color: #9ca3af;
       line-height: 1.5;
@@ -417,44 +729,66 @@
 
     .pill {
       font-size: 11px;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
-      background: #f3e8ff;
+      background: rgba(243, 232, 255, 0.95);
       color: #6b21a8;
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>ИИ-подбор букетов (демо)</span>
+  <div class="floral-orb floral-orb--pink"></div>
+  <div class="floral-orb floral-orb--lavender"></div>
+  <div class="floral-orb floral-orb--peach"></div>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark">🌸</div>
+        <div class="brand-titles">
+          <div class="brand-name">Atelier Bouquet</div>
+          <div class="brand-tagline">Emotional AI flower matching</div>
+        </div>
       </div>
-      <h1>Подбор идеального букета по живому запросу клиента</h1>
-      <p class="subtitle">
-        Клиент пишет, что он хочет, обычным языком — языковая модель находит подходящие
-        букеты в каталоге по параметрам цветов, оформления, повода и получателя.
-      </p>
+      <div class="header-pill">
+        <span class="header-pill-dot"></span>
+        <span>AI подбор · Boutique experience</span>
+      </div>
     </header>
 
+    <section class="hero">
+      <h1 class="hero-title">
+        Идеальный букет, который чувствует <span>повод, стиль и эмоцию</span>.
+      </h1>
+      <p class="hero-subtitle">
+        Опишите момент: кому, за что вы дарите, какой характер у человека и как хотите,
+        чтобы он себя почувствовал. Сервис подберёт <strong>премиальные букеты</strong> с объяснением,
+        почему именно они подходят.
+      </p>
+    </section>
+
     <main class="layout">
-      <!-- Левая панель -->
+      <!-- Левая колонка: запрос -->
       <section class="panel">
-        <div class="panel-title">
-          <span>Запрос клиента</span>
-          <span class="panel-title-tag">Natural language → рекомендации</span>
+        <div class="panel-header">
+          <div class="panel-title">Запрос клиента</div>
+          <div class="panel-chip">Natural language → Floral intent</div>
         </div>
 
-        <label for="query">Опишите, какой букет нужен:</label>
+        <div class="input-label">Опишите, какой букет нужен:</div>
         <div class="input-wrapper">
           <textarea
             id="query"
-            placeholder="Например: «Хочу нежный букет на день рождения девушки, ей 25 лет, любит пионы, бюджет до 8000 рублей»"
+            placeholder="Нежный букет для подруги на 25 лет, любит пионы и розовый, бюджет до 8 000 ₽..."
           ></textarea>
+          <div class="typing-hint" id="typingHint">
+            <span class="typing-dot"></span>
+            <span id="typingHintText">Сервис понимает живую речь…</span>
+          </div>
         </div>
         <p class="hint">
-          Пишите так, как обычно говорит клиент: повод, кому, возраст, любимые цветы, бюджет (в рублях), стиль.
+          Можно писать, как в переписке: повод, кому, возраст, любимые цветы,
+          настроение подарка и примерный бюджет.
         </p>
 
         <div class="input-footer">
@@ -464,50 +798,62 @@
           </button>
           <div class="status">
             <span class="status-dot"></span>
-            Модель анализирует текст и сопоставляет с параметрами букетов
+            <span class="status-label">AI ready</span>
           </div>
         </div>
 
         <div class="examples">
-          <button class="example" data-example="Хочу букет на день рождения девушки, ей 20 лет, любит розовые розы, бюджет до 5000 рублей">
-            🎂 День рождения девушки, 20 лет
+          <button
+            class="example"
+            data-example="Нежный букет для девушки на годовщину, 24 года, любит пионы и светло-розовые тона, бюджет до 7000 ₽"
+          >
+            Романтичный для неё
           </button>
-          <button class="example" data-example="Нужен строгий букет коллеге-мужчине на юбилей, без роз, примерно за 3500 руб">
-            💼 Коллега-мужчина, без роз
+          <button
+            class="example"
+            data-example="Стильный минималистичный букет для коллеги на день рождения, до 4000 ₽, без красных роз"
+          >
+            Минимализм для коллеги
           </button>
-          <button class="example" data-example="Ищу букет для мамы на 8 марта, любит тюльпаны, бюджет около 3000₽">
-            🌷 Маме на 8 марта
+          <button
+            class="example"
+            data-example="Яркий букет на юбилей мамы, 55 лет, любит тюльпаны и пастельные цвета, бюджет 10–12 тысяч"
+          >
+            Юбилей для мамы
           </button>
         </div>
       </section>
 
-      <!-- Правая панель -->
-      <section class="panel">
-        <div class="panel-title">
-          <span>Подборка букетов</span>
+      <!-- Правая колонка: рекомендации -->
+      <section class="panel panel--results">
+        <div class="panel-header">
+          <div class="panel-title">Рекомендации AI</div>
+          <div class="panel-chip">Curated bouquet selection</div>
         </div>
+
         <div class="results-header">
-          <div class="results-summary" id="resultsSummary">
-            Введите запрос и нажмите «Подобрать букет».
+          <div id="resultsSummary" class="results-summary">
+            Букеты ещё не подобраны — опишите запрос слева.
           </div>
-          <div class="results-filters" id="resultsFilters">
-            Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет
+          <div id="resultsFilters" class="results-filters">
+            Фильтрация по: цветы, повод, стиль, получатель, бюджет
           </div>
         </div>
-        <div id="parsedQueryDebug" class="results-debug"></div>
+
+        <div id="parsedQueryDebug" class="results-debug" style="display: none;"></div>
+
         <div id="results" class="results-grid"></div>
+
         <div id="emptyState" class="empty-state" style="display: none;">
           По этому запросу пока ничего не нашли. Попробуйте добавить любимые цветы,
           повод, бюджет и для кого букет (например, «романтичный букет для девушки на свидание до 4000 рублей»).
         </div>
 
         <div class="footer-note">
-          <span class="pill">Как это будет работать с ML</span><br />
-          В продакшене здесь будет вызываться <strong>языковая модель / ML-сервис</strong>.
-          Фронтенд отправляет текст запроса и историю клиента на сервер, сервер:
-          считает параметры запроса 👉 вычисляет релевантность букетов 👉 возвращает рейтинг
-          и объяснение. По накопленным запросам и покупкам можно обучать модель, чтобы
-          рекомендации становились точнее.
+          <span class="pill">AI atelier inside</span><br />
+          В продакшене здесь работает <strong>языковая модель и ранжирование каталога</strong>:
+          запрос переводится в параметры (повод, стиль, цветы, бюджет), считается близость к букетам
+          и возвращается объяснимый рейтинг. Со временем система учится на реальных заказах.
         </div>
       </section>
     </main>
@@ -521,6 +867,78 @@
   const resultsSummary = document.getElementById("resultsSummary");
   const resultsFilters = document.getElementById("resultsFilters");
   const parsedQueryDebug = document.getElementById("parsedQueryDebug");
+  const typingHint = document.getElementById("typingHint");
+  const typingHintText = document.getElementById("typingHintText");
+  const floralOrbs = document.querySelectorAll(".floral-orb");
+
+  // лёгкий параллакс фоновых элементов
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY || 0;
+    floralOrbs.forEach((orb, index) => {
+      const factor = 0.06 + index * 0.02;
+      orb.style.transform = `translate3d(0, ${y * factor}px, 0)`;
+    });
+  });
+
+  // анимация "набирающегося" примера в плейсхолдере
+  const samplePlaceholders = [
+    "Нежный букет на день рождения подруги, любит пионы и пастель…",
+    "Минималистичный букет для коллеги, без красных роз, до 4 000 ₽…",
+    "Яркий, но элегантный букет для мамы, 55 лет, бюджет 10–12 тысяч…"
+  ];
+
+  let typingIdx = 0;
+  let charIdx = 0;
+  let typingTimer = null;
+
+  function startTypingPlaceholder() {
+    if (typingTimer || queryInput.value.trim()) return;
+    typingTimer = setInterval(() => {
+      if (document.activeElement === queryInput || queryInput.value.trim()) {
+        stopTypingPlaceholder();
+        return;
+      }
+      const text = samplePlaceholders[typingIdx];
+      charIdx += 1;
+      if (charIdx > text.length + 8) {
+        charIdx = 0;
+        typingIdx = (typingIdx + 1) % samplePlaceholders.length;
+      }
+      const slice = text.slice(0, Math.min(charIdx, text.length));
+      queryInput.placeholder = slice || "Опишите момент, для которого нужен букет…";
+    }, 90);
+  }
+
+  function stopTypingPlaceholder() {
+    if (typingTimer) {
+      clearInterval(typingTimer);
+      typingTimer = null;
+    }
+  }
+
+  queryInput.addEventListener("focus", () => {
+    typingHint.style.opacity = "0";
+    stopTypingPlaceholder();
+  });
+
+  queryInput.addEventListener("blur", () => {
+    if (!queryInput.value.trim()) {
+      typingHint.style.opacity = "1";
+      startTypingPlaceholder();
+    }
+  });
+
+  queryInput.addEventListener("input", () => {
+    if (queryInput.value.trim()) {
+      typingHint.style.opacity = "0";
+      stopTypingPlaceholder();
+    } else {
+      typingHint.style.opacity = "1";
+      startTypingPlaceholder();
+    }
+  });
+
+  startTypingPlaceholder();
 
   // примеры
   document.querySelectorAll(".example").forEach((btn) => {
@@ -528,12 +946,12 @@
       const text = btn.getAttribute("data-example");
       queryInput.value = text;
       queryInput.focus();
+      typingHint.style.opacity = "0";
+      stopTypingPlaceholder();
     });
   });
 
-  // отрисовка карточек
   function renderResults(data) {
-    // сервер сейчас возвращает: { bouquets: [...], totalFound, debug }
     const results = Array.isArray(data.bouquets)
       ? data.bouquets
       : Array.isArray(data.results)
@@ -572,77 +990,104 @@
 
     results.forEach((b) => {
       const card = document.createElement("article");
-      card.className = "card";
+      card.className = "bouquet-card";
 
-      const main = document.createElement("div");
-      main.className = "card-main";
-
-      const thumb = document.createElement("div");
-      thumb.className = "thumb";
+      const imageWrapper = document.createElement("div");
+      imageWrapper.className = "bouquet-image-wrapper";
 
       if (b.imageUrl) {
         const img = document.createElement("img");
         img.src = b.imageUrl;
-        img.alt = b.name;
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
-        img.style.borderRadius = "14px";
-        thumb.appendChild(img);
-      } else {
-        thumb.textContent = b.emoji || "💐";
+        img.alt = b.name || "Букет";
+        img.className = "bouquet-image";
+        imageWrapper.appendChild(img);
       }
+
+      const chipLeft = document.createElement("div");
+      chipLeft.className = "bouquet-chip";
+      chipLeft.textContent = b.budgetTag || "Каталог";
+
+      const chipRight = document.createElement("div");
+      chipRight.className = "bouquet-chip bouquet-chip--ai";
+      chipRight.textContent = "AI подбор";
+
+      imageWrapper.appendChild(chipLeft);
+      imageWrapper.appendChild(chipRight);
 
       const body = document.createElement("div");
-      body.className = "card-body";
+      body.className = "bouquet-card-body";
 
-      const title = document.createElement("div");
-      title.className = "card-title";
+      const header = document.createElement("div");
+      header.className = "bouquet-card-header";
+
+      const title = document.createElement("h3");
+      title.className = "bouquet-name";
       title.textContent = b.name;
 
-      const desc = document.createElement("div");
-      desc.className = "card-desc";
-      desc.textContent = b.description || "";
-
-      const meta = document.createElement("div");
-      meta.className = "card-meta";
+      const priceBlock = document.createElement("div");
+      priceBlock.className = "bouquet-price-block";
 
       const price = document.createElement("span");
-      price.className = "price";
+      price.className = "bouquet-price";
       price.textContent = `${Number(b.price).toLocaleString("ru-RU")} ${b.currency || "₽"}`;
 
-      const badge = document.createElement("span");
-      badge.className = "badge-small";
+      const scoreLine = document.createElement("div");
+      scoreLine.className = "score-line";
+      const scoreDot = document.createElement("span");
+      scoreDot.className = "score-dot";
+      const scoreLabel = document.createElement("span");
       if (typeof b.score === "number") {
-        badge.textContent = `score ${b.score.toFixed(2)}`;
-        badge.classList.add("score-badge");
+        scoreLabel.textContent = "подходит по запросу";
       } else {
-        badge.textContent = b.budgetTag || "AI подбор";
+        scoreLabel.textContent = "предложение ателье";
+      }
+      scoreLine.appendChild(scoreDot);
+      scoreLine.appendChild(scoreLabel);
+
+      priceBlock.appendChild(price);
+      priceBlock.appendChild(scoreLine);
+
+      header.appendChild(title);
+      header.appendChild(priceBlock);
+
+      const desc = document.createElement("p");
+      desc.className = "bouquet-desc";
+      desc.textContent = b.description || "";
+
+      const tagsRow = document.createElement("div");
+      tagsRow.className = "bouquet-tags-row";
+
+      if (b.flowers && b.flowers.length) {
+        const tagFlowers = document.createElement("span");
+        tagFlowers.className = "tag tag--flowers";
+        tagFlowers.textContent = (b.flowers || []).join(", ");
+        tagsRow.appendChild(tagFlowers);
       }
 
-      meta.appendChild(price);
-      meta.appendChild(badge);
-
-      const tags = document.createElement("div");
-      tags.className = "tags";
-
-      const tagFlowers = document.createElement("span");
-      tagFlowers.className = "tag";
-      tagFlowers.textContent = (b.flowers || []).join(", ");
-
-      const tagStyle = document.createElement("span");
-      tagStyle.className = "tag";
-      tagStyle.textContent = (b.style || []).join(", ");
-
-      tags.appendChild(tagFlowers);
-      tags.appendChild(tagStyle);
+      if (b.style && b.style.length) {
+        const tagStyle = document.createElement("span");
+        tagStyle.className = "tag tag--style";
+        tagStyle.textContent = (b.style || []).join(", ");
+        tagsRow.appendChild(tagStyle);
+      }
 
       if (b.occasions && b.occasions.length) {
         const tagOcc = document.createElement("span");
-        tagOcc.className = "tag";
+        tagOcc.className = "tag tag--occasion";
         tagOcc.textContent = b.occasions[0];
-        tags.appendChild(tagOcc);
+        tagsRow.appendChild(tagOcc);
       }
+
+      const aiRow = document.createElement("div");
+      aiRow.className = "bouquet-ai-row";
+      const aiBadge = document.createElement("span");
+      aiBadge.className = "ai-badge";
+      aiBadge.textContent = "Почему подходит";
+      const aiText = document.createElement("span");
+      aiText.className = "ai-reason-text";
+      aiText.textContent = b.reason || "подчёркивает стиль, настроение и бюджет вашего запроса";
+      aiRow.appendChild(aiBadge);
+      aiRow.appendChild(aiText);
 
       const comp = document.createElement("div");
       comp.className = "card-composition";
@@ -653,23 +1098,15 @@
       compHint.className = "composition-hint";
       compHint.textContent = "Нажмите на карточку, чтобы показать/скрыть состав.";
 
-      body.appendChild(title);
+      body.appendChild(header);
       body.appendChild(desc);
-      body.appendChild(meta);
-      body.appendChild(tags);
-
-      if (b.reason) {
-        const reason = document.createElement("div");
-        reason.className = "match-reason";
-        reason.textContent = `Почему подходит: ${b.reason}`;
-        body.appendChild(reason);
-      }
+      body.appendChild(tagsRow);
+      body.appendChild(aiRow);
       body.appendChild(compHint);
       body.appendChild(comp);
 
-      main.appendChild(thumb);
-      main.appendChild(body);
-      card.appendChild(main);
+      card.appendChild(imageWrapper);
+      card.appendChild(body);
 
       card.title = comp.textContent;
       card.addEventListener("click", () => {
@@ -727,7 +1164,7 @@
     }
 
     searchBtn.disabled = true;
-    searchBtn.textContent = "Подбираем...";
+    searchBtn.innerHTML = '<span class="sparkles">✨</span><span>Подбираем…</span>';
 
     try {
       const response = await fetch("/api/smart-search", {
@@ -741,7 +1178,6 @@
       }
 
       const data = await response.json();
-      console.log("Ответ от сервера:", data);
       renderResults(data);
     } catch (err) {
       console.error(err);
@@ -766,3 +1202,4 @@
   </script>
 </body>
 </html>
+
