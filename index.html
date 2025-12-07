@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Подбор букета с помощью ИИ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #ffe5f1, #f3f4f6);
+      min-height: 100vh;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffffdd;
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.15);
+      padding: 28px 24px 32px;
+    }
+
+    @media (min-width: 768px) {
+      .app {
+        padding: 32px 40px 40px;
+      }
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
+      width: fit-content;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+    }
+
+    h1 {
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      max-width: 560px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr;
+      gap: 24px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: #f9fafb;
+      border-radius: 18px;
+      padding: 16px 16px 18px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .panel-title span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-title-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
+      padding: 10px 12px 34px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+      background: #ffffff;
+    }
+
+    textarea:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2);
+      background: #ffffff;
+    }
+
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .input-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .example {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #4b5563;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.08s;
+      white-space: nowrap;
+    }
+
+    .example:hover {
+      background: #d1d5db;
+      transform: translateY(-1px);
+    }
+
+    button.primary {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5, #ec4899);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, filter 0.1s;
+    }
+
+    button.primary:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+      filter: brightness(0.98);
+    }
+
+    button.primary:disabled {
+      opacity: 0.7;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .sparkles {
+      font-size: 16px;
+    }
+
+    .status {
+      font-size: 12px;
+      color: #6b7280;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .results-summary {
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    .results-filters {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .results-debug {
+      font-size: 11px;
+      color: #4b5563;
+      margin-bottom: 6px;
+      border-left: 2px solid #c7d2fe;
+      padding-left: 8px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      padding: 10px 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+      border-color: #c7d2fe;
+    }
+
+    .card-main {
+      display: flex;
+      gap: 8px;
+    }
+
+    .thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #fecaca, #f9a8d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .price {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .badge-small {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .score-badge {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .card-composition {
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed #e5e7eb;
+      display: none;
+    }
+
+    .match-reason {
+      font-size: 11px;
+      color: #4c1d95;
+      margin-top: 4px;
+    }
+
+    .composition-hint {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .empty-state {
+      font-size: 13px;
+      color: #6b7280;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px dashed #d1d5db;
+      background: #f9fafb;
+      margin-top: 8px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 11px;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    .footer-note strong {
+      color: #6b21a8;
+      font-weight: 600;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>ИИ-подбор букетов (демо)</span>
+      </div>
+      <h1>Подбор идеального букета по живому запросу клиента</h1>
+      <p class="subtitle">
+        Клиент пишет, что он хочет, обычным языком — языковая модель находит подходящие
+        букеты в каталоге по параметрам цветов, оформления, повода и получателя.
+      </p>
+    </header>
+
+    <main class="layout">
+      <!-- Левая панель -->
+      <section class="panel">
+        <div class="panel-title">
+          <span>Запрос клиента</span>
+          <span class="panel-title-tag">Natural language → рекомендации</span>
+        </div>
+
+        <label for="query">Опишите, какой букет нужен:</label>
+        <div class="input-wrapper">
+          <textarea
+            id="query"
+            placeholder="Например: «Хочу нежный букет на день рождения девушки, ей 25 лет, любит пионы, бюджет до 8000 рублей»"
+          ></textarea>
+        </div>
+        <p class="hint">
+          Пишите так, как обычно говорит клиент: повод, кому, возраст, любимые цветы, бюджет (в рублях), стиль.
+        </p>
+
+        <div class="input-footer">
+          <button id="searchBtn" class="primary">
+            <span class="sparkles">✨</span>
+            <span>Подобрать букет</span>
+          </button>
+          <div class="status">
+            <span class="status-dot"></span>
+            Модель анализирует текст и сопоставляет с параметрами букетов
+          </div>
+        </div>
+
+        <div class="examples">
+          <button class="example" data-example="Хочу букет на день рождения девушки, ей 20 лет, любит розовые розы, бюджет до 5000 рублей">
+            🎂 День рождения девушки, 20 лет
+          </button>
+          <button class="example" data-example="Нужен строгий букет коллеге-мужчине на юбилей, без роз, примерно за 3500 руб">
+            💼 Коллега-мужчина, без роз
+          </button>
+          <button class="example" data-example="Ищу букет для мамы на 8 марта, любит тюльпаны, бюджет около 3000₽">
+            🌷 Маме на 8 марта
+          </button>
+        </div>
+      </section>
+
+      <!-- Правая панель -->
+      <section class="panel">
+        <div class="panel-title">
+          <span>Подборка букетов</span>
+        </div>
+        <div class="results-header">
+          <div class="results-summary" id="resultsSummary">
+            Введите запрос и нажмите «Подобрать букет».
+          </div>
+          <div class="results-filters" id="resultsFilters">
+            Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет
+          </div>
+        </div>
+        <div id="parsedQueryDebug" class="results-debug"></div>
+        <div id="results" class="results-grid"></div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+          По этому запросу пока ничего не нашли. Попробуйте добавить любимые цветы,
+          повод, бюджет и для кого букет (например, «романтичный букет для девушки на свидание до 4000 рублей»).
+        </div>
+
+        <div class="footer-note">
+          <span class="pill">Как это будет работать с ML</span><br />
+          В продакшене здесь будет вызываться <strong>языковая модель / ML-сервис</strong>.
+          Фронтенд отправляет текст запроса и историю клиента на сервер, сервер:
+          считает параметры запроса 👉 вычисляет релевантность букетов 👉 возвращает рейтинг
+          и объяснение. По накопленным запросам и покупкам можно обучать модель, чтобы
+          рекомендации становились точнее.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+  const queryInput = document.getElementById("query");
+  const searchBtn = document.getElementById("searchBtn");
+  const resultsContainer = document.getElementById("results");
+  const emptyState = document.getElementById("emptyState");
+  const resultsSummary = document.getElementById("resultsSummary");
+  const resultsFilters = document.getElementById("resultsFilters");
+  const parsedQueryDebug = document.getElementById("parsedQueryDebug");
+
+  // примеры
+  document.querySelectorAll(".example").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const text = btn.getAttribute("data-example");
+      queryInput.value = text;
+      queryInput.focus();
+    });
+  });
+
+  // отрисовка карточек
+  function renderResults(data) {
+    // сервер сейчас возвращает: { bouquets: [...], totalFound, debug }
+    const results = Array.isArray(data.bouquets)
+      ? data.bouquets
+      : Array.isArray(data.results)
+        ? data.results
+        : [];
+
+    const debug = data.debug || {};
+    const filtersUsed = debug.filtersUsed || [];
+    const parsedQuery = debug.parsedQuery || null;
+
+    resultsContainer.innerHTML = "";
+
+    if (!results.length) {
+      emptyState.style.display = "block";
+      resultsSummary.textContent = "Букеты по этому запросу не найдены.";
+    } else {
+      emptyState.style.display = "none";
+      const count = typeof data.totalFound === "number" ? data.totalFound : results.length;
+      resultsSummary.textContent = `Найдено букетов: ${count}`;
+    }
+
+    if (filtersUsed && filtersUsed.length) {
+      resultsFilters.textContent = "Учитываем: " + filtersUsed.join(" · ");
+    } else {
+      resultsFilters.textContent =
+        "Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет";
+    }
+
+    if (parsedQuery) {
+      parsedQueryDebug.textContent = formatParsedQuery(parsedQuery);
+      parsedQueryDebug.style.display = "block";
+    } else {
+      parsedQueryDebug.textContent = "";
+      parsedQueryDebug.style.display = "none";
+    }
+
+    results.forEach((b) => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const main = document.createElement("div");
+      main.className = "card-main";
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+
+      if (b.imageUrl) {
+        const img = document.createElement("img");
+        img.src = b.imageUrl;
+        img.alt = b.name;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "14px";
+        thumb.appendChild(img);
+      } else {
+        thumb.textContent = b.emoji || "💐";
+      }
+
+      const body = document.createElement("div");
+      body.className = "card-body";
+
+      const title = document.createElement("div");
+      title.className = "card-title";
+      title.textContent = b.name;
+
+      const desc = document.createElement("div");
+      desc.className = "card-desc";
+      desc.textContent = b.description || "";
+
+      const meta = document.createElement("div");
+      meta.className = "card-meta";
+
+      const price = document.createElement("span");
+      price.className = "price";
+      price.textContent = `${Number(b.price).toLocaleString("ru-RU")} ${b.currency || "₽"}`;
+
+      const badge = document.createElement("span");
+      badge.className = "badge-small";
+      if (typeof b.score === "number") {
+        badge.textContent = `score ${b.score.toFixed(2)}`;
+        badge.classList.add("score-badge");
+      } else {
+        badge.textContent = b.budgetTag || "AI подбор";
+      }
+
+      meta.appendChild(price);
+      meta.appendChild(badge);
+
+      const tags = document.createElement("div");
+      tags.className = "tags";
+
+      const tagFlowers = document.createElement("span");
+      tagFlowers.className = "tag";
+      tagFlowers.textContent = (b.flowers || []).join(", ");
+
+      const tagStyle = document.createElement("span");
+      tagStyle.className = "tag";
+      tagStyle.textContent = (b.style || []).join(", ");
+
+      tags.appendChild(tagFlowers);
+      tags.appendChild(tagStyle);
+
+      if (b.occasions && b.occasions.length) {
+        const tagOcc = document.createElement("span");
+        tagOcc.className = "tag";
+        tagOcc.textContent = b.occasions[0];
+        tags.appendChild(tagOcc);
+      }
+
+      const comp = document.createElement("div");
+      comp.className = "card-composition";
+      comp.textContent =
+        "Состав: " + (b.composition || (b.flowers || []).join(", ") + ", зелень, оформление.");
+
+      const compHint = document.createElement("div");
+      compHint.className = "composition-hint";
+      compHint.textContent = "Нажмите на карточку, чтобы показать/скрыть состав.";
+
+      body.appendChild(title);
+      body.appendChild(desc);
+      body.appendChild(meta);
+      body.appendChild(tags);
+
+      if (b.reason) {
+        const reason = document.createElement("div");
+        reason.className = "match-reason";
+        reason.textContent = `Почему подходит: ${b.reason}`;
+        body.appendChild(reason);
+      }
+      body.appendChild(compHint);
+      body.appendChild(comp);
+
+      main.appendChild(thumb);
+      main.appendChild(body);
+      card.appendChild(main);
+
+      card.title = comp.textContent;
+      card.addEventListener("click", () => {
+        const visible = comp.style.display === "block";
+        comp.style.display = visible ? "none" : "block";
+      });
+
+      resultsContainer.appendChild(card);
+    });
+  }
+
+  function formatParsedQuery(parsed) {
+    if (!parsed) return "";
+    const parts = [];
+    if (parsed.flowers_wanted && parsed.flowers_wanted.length) {
+      parts.push(`нужны: ${parsed.flowers_wanted.join(", ")}`);
+    }
+    if (parsed.flowers_not_wanted && parsed.flowers_not_wanted.length) {
+      parts.push(`без: ${parsed.flowers_not_wanted.join(", ")}`);
+    }
+    if (parsed.colours && parsed.colours.length) {
+      parts.push(`цвета: ${parsed.colours.join(", ")}`);
+    }
+    if (parsed.style && parsed.style.length) {
+      parts.push(`стиль: ${parsed.style.join(", ")}`);
+    }
+    if (parsed.relationship) {
+      parts.push(`для: ${parsed.relationship}`);
+    }
+    if (parsed.occasion) {
+      parts.push(`повод: ${parsed.occasion}`);
+    }
+    if (parsed.age) {
+      parts.push(`возраст: ${parsed.age}`);
+    }
+    if (parsed.budget_min || parsed.budget_max) {
+      const min = parsed.budget_min ? `${parsed.budget_min}` : null;
+      const max = parsed.budget_max ? `${parsed.budget_max}` : null;
+      parts.push(`бюджет: ${min || "?"} – ${max || "?"} ₽`);
+    }
+    return parts.join(" · ");
+  }
+
+  async function handleSearch() {
+    const q = queryInput.value.trim();
+    if (!q) {
+      resultsSummary.textContent = "Введите запрос и нажмите «Подобрать букет».";
+      resultsContainer.innerHTML = "";
+      emptyState.style.display = "none";
+      resultsFilters.textContent =
+        "Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет";
+      parsedQueryDebug.textContent = "";
+      parsedQueryDebug.style.display = "none";
+      return;
+    }
+
+    searchBtn.disabled = true;
+    searchBtn.textContent = "Подбираем...";
+
+    try {
+      const response = await fetch("/api/smart-search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: q })
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+      }
+
+      const data = await response.json();
+      console.log("Ответ от сервера:", data);
+      renderResults(data);
+    } catch (err) {
+      console.error(err);
+      resultsSummary.textContent = "Ошибка запроса к серверу.";
+      resultsContainer.innerHTML = "";
+      emptyState.style.display = "block";
+      emptyState.textContent = "Не удалось получить ответ от сервера. Проверьте, что он запущен.";
+      parsedQueryDebug.textContent = "";
+      parsedQueryDebug.style.display = "none";
+    } finally {
+      searchBtn.disabled = false;
+      searchBtn.innerHTML = '<span class="sparkles">✨</span><span>Подобрать букет</span>';
+    }
+  }
+
+  searchBtn.addEventListener("click", handleSearch);
+  queryInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+      handleSearch();
+    }
+  });
+  </script>
+</body>
+</html>
