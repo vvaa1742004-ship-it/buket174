@@ -7,8 +7,38 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_photo_5_2025_02_05_14_28_19.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_922.html",
     "description": null,
-    "composition": "- Роза 40 см -7 шт.\n- Роза кустовая - 6 шт.\n- Тишью - 2 шт.\n- Пленка - 3 м.\n- Конверт - 1шт.\n- Кризал - 1 шт.\n- Открытка - 1 шт.",
-    "promo": null
+    "composition": "- Роза 40 см (розовая) - 7 шт.\n- Роза кустовая (розовая) - 6 шт.\n- Тишью - 2 шт.\n- Пленка - 3 шт.\n- Конверт - 1 шт.\n- Кризал - 1 шт.\n- Открытка (бордовая) - 1 шт.",
+    "promo": null,
+    "style": [
+      "нежный",
+      "минимализм"
+    ],
+    "flowers": [
+      "роза",
+      "роза кустовая"
+    ],
+    "colours": [
+      "розовый"
+    ],
+    "occasions": [
+      "день рождения",
+      "8 марта",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_photo_5_2025_02_05_14_28_19.jpg"
+    ],
+    "discountPercent": 20,
+    "discountedPrice": 3679.2,
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 2,
@@ -18,8 +48,30 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_photo_3_2025_02_05_13_30_29.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_920.html",
     "description": null,
-    "composition": "- Роза 40 см - 5 шт.,\n- Сантини - 4 шт.,\n- Тишью - 2 шт.,\n- Пленка - 2 м.,\n- Конверт - 1 шт.,\n- Кризал - 1 шт.,\n- Открытка - 1 шт.,\n- Эвкалипт - 0.2 шт.",
-    "promo": null
+    "composition": "- Роза 40 см (красная) - 5 шт.,\n- Сантини - 4 шт.,\n- Тишью - 2 шт.,\n- Пленка - 2 м.,\n- Конверт - 1 шт.,\n- Кризал - 1 шт.,\n- Открытка - 1 шт.,\n- Эвкалипт - 0.2 шт.",
+    "promo": null,
+    "style": [
+      "классический",
+      "моно-букет"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "красный"
+    ],
+    "occasions": [
+      "свидание"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_photo_3_2025_02_05_13_30_29.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 3,
@@ -30,7 +82,35 @@
     "url": "https://kupibuket74.ru/bukety/bukety_917.html",
     "description": null,
     "composition": "- Гортензия - 3 шт.,\n- Кустовая роза - 4 шт.,\n- Лента атласная - 1 м.,\n- Тишью -  1шт.,\n- Пленка - 1 м.,\n- Эвкалипт - 0.3 шт.,\n- Конверт - 1 шт.,\n- Кризал - 1 шт.,\n- Открытка - 1 шт.",
-    "promo": null
+    "promo": null,
+    "style": [
+      "нежный"
+    ],
+    "flowers": [
+      "роза",
+      "гортензия"
+    ],
+    "colours": [
+      "розовый"
+    ],
+    "occasions": [
+      "1 сентября",
+      "день рождения",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы",
+      "для коллеги",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_IMG_20250131_145950_edit_770348124192957.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 4,
@@ -41,7 +121,31 @@
     "url": "https://kupibuket74.ru/bukety/bukety_910.html",
     "description": null,
     "composition": "- Тюльпан - 51 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1.",
-    "promo": null
+    "promo": null,
+    "style": [
+      "яркий"
+    ],
+    "flowers": [
+      "тюльпан"
+    ],
+    "colours": [
+      "мультиколор"
+    ],
+    "occasions": [
+      "8 марта",
+      "день рождения",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_msg369494029_84683.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 5,
@@ -52,7 +156,33 @@
     "url": "https://kupibuket74.ru/bukety/bukety_909.html",
     "description": null,
     "composition": "- Тюльпан - 25 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "promo": null,
+    "style": [
+      "яркий",
+      "моно-букет"
+    ],
+    "flowers": [
+      "тюльпан"
+    ],
+    "colours": [
+      "мультиколор"
+    ],
+    "occasions": [
+      "8 марта",
+      "день рождения",
+      "свидание"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_msg369494029_84678.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 6,
@@ -62,8 +192,33 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_msg369494029_84675.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_908.html",
     "description": null,
-    "composition": "- Тюльпан - 15 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "composition": "- Тюльпан (микс) - 15 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
+    "promo": null,
+    "style": [
+      "яркий"
+    ],
+    "flowers": [
+      "тюльпан"
+    ],
+    "colours": [
+      "мультиколор"
+    ],
+    "occasions": [
+      "8 марта",
+      "день рождения"
+    ],
+    "recipients": [
+      "для жены",
+      "для девушки",
+      "для мамы",
+      "для коллеги",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_msg369494029_84675.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 7,
@@ -73,8 +228,35 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP152_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_906.html",
     "description": null,
-    "composition": "- Роза кустовая - 7 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Кризал - 1 шт.,\n- Хризантема одноголовая - 4 шт.,\n- Фисташка - 5 шт.",
-    "promo": null
+    "composition": "- Роза кустовая (розовая) - 7 шт.,\n- Хризантема одноголовая (белая) - 4 шт.,\n- Фисташка - 5 шт.\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Кризал - 1 шт.,",
+    "promo": null,
+    "style": [
+      "нежный"
+    ],
+    "flowers": [
+      "роза",
+      "хризантема"
+    ],
+    "colours": [
+      "белый",
+      "пастельный",
+      "розовый"
+    ],
+    "occasions": [
+      "день рождения",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP152_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 8,
@@ -84,8 +266,33 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP147_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_905.html",
     "description": null,
-    "composition": "- Роза Россия - 25 шт.,\n- Сантини - 13 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "composition": "- Роза Россия (красная) - 25 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
+    "promo": null,
+    "style": [
+      "моно-букет",
+      "классический"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "красный"
+    ],
+    "occasions": [
+      "8 марта",
+      "день рождения",
+      "свадьба",
+      "свидание"
+    ],
+    "recipients": [
+      "для жены",
+      "для девушки"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP147_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 9,
@@ -95,8 +302,33 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP146_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_904.html",
     "description": null,
-    "composition": "- Роза кустовая - 19 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "composition": "- Роза кустовая (розовая) - 19 шт.,\n- Пленка - 2 м.,\n- Лента - 2 м.,\n- Тишью - 2 м.,\n- Эвкалипт - 0,5 шт.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
+    "promo": null,
+    "style": [
+      "минимализм",
+      "нежный"
+    ],
+    "flowers": [
+      "роза кустовая"
+    ],
+    "colours": [
+      "пастельный",
+      "розовый"
+    ],
+    "occasions": [
+      "8 марта",
+      "день рождения",
+      "свидание"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP146_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 10,
@@ -106,8 +338,32 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP140_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_903.html",
     "description": null,
-    "composition": "- Роза Россия - 75 шт.,\n- Пленка - 5 м.,\n- Лента - 2 м.,\n- Тишью - 4 м.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "composition": "- Роза Россия (красная) - 75 шт.,\n- Пленка - 5 м.,\n- Лента - 2 м.,\n- Тишью - 4 м.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
+    "promo": null,
+    "style": [
+      "классический",
+      "моно-букет"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "красный"
+    ],
+    "occasions": [
+      "свадьба",
+      "свидание",
+      "день рождения"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP140_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 11,
@@ -117,8 +373,31 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP122_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_902.html",
     "description": null,
-    "composition": "- Роза Россия - 15 шт.,\n- Пленка - 2 м.,\n- Лента - 1 м.,\n- Кризал - 1 шт.\n- Тишью - 2 м.,\n- Сантини - 11 шт.",
-    "promo": null
+    "composition": "- Роза Россия (красная) - 15 шт.,\n- Пленка - 2 м.,\n- Лента - 1 м.,\n- Кризал - 1 шт.\n- Тишью - 2 м.,",
+    "promo": null,
+    "style": [
+      "классический"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "красный"
+    ],
+    "occasions": [
+      "свидание",
+      "свадьба",
+      "день рождения"
+    ],
+    "recipients": [
+      "для жены",
+      "для девушки"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP122_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 12,
@@ -128,8 +407,34 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP115_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_899.html",
     "description": null,
-    "composition": "- Хризантема одноголовая - 9 шт.,\n- Хризантема кустовая - 7 шт.,\n- Пленка - 2 м.,\n- Кризал - 1 шт.\n- Лента - 1 м.,\n- Эвкалипт - 0,5 шт.",
-    "promo": null
+    "composition": "- Хризантема одноголовая (белая) - 9 шт.,\n- Хризантема кустовая (красная) - 7 шт.,\n- Пленка - 2 м.,\n- Кризал - 1 шт.\n- Лента - 1 м.,\n- Эвкалипт - 0,5 шт.",
+    "promo": null,
+    "style": [
+      "моно-букет"
+    ],
+    "flowers": [
+      "хризантема"
+    ],
+    "colours": [
+      "белый"
+    ],
+    "occasions": [
+      "1 сентября",
+      "день рождения",
+      "новый год",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP115_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 13,
@@ -139,8 +444,33 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP079_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_898.html",
     "description": null,
-    "composition": "- Хризантема одноголовая - 5 шт.,\n- Хризантема кустовая - 7 шт.,\n- Пленка - 2 м.,\n- Лента - 1 м.,\n- Эвкалипт - 0,5 шт.",
-    "promo": null
+    "composition": "- Хризантема одноголовая (белая) - 5 шт.,\n- Хризантема кустовая (белая) - 7 шт.,\n- Пленка - 2 м.,\n- Лента - 1 м.,\n- Эвкалипт - 0,5 шт.",
+    "promo": null,
+    "style": [
+      "минимализм"
+    ],
+    "flowers": [
+      "хризантема"
+    ],
+    "colours": [
+      "белый"
+    ],
+    "occasions": [
+      "1 сентября",
+      "день рождения",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для жены",
+      "для девушки",
+      "для мамы"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP079_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 14,
@@ -151,7 +481,32 @@
     "url": "https://kupibuket74.ru/bukety/bukety_897.html",
     "description": null,
     "composition": "- Роза Россия - 25 шт.,\n- Эвкалипт - 0,2 шт.,\n- Фоамиран - 2 м.,\n- Пленка - 2 м.,\n- Лента - 1 м.,\n- Конверт - 1 шт.,\n- Открытка - 1 шт.,\n- Кризал - 1 шт.",
-    "promo": null
+    "promo": null,
+    "style": [
+      "нежный"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "розовый"
+    ],
+    "occasions": [
+      "день рождения",
+      "свидание",
+      "юбилей"
+    ],
+    "recipients": [
+      "для девушки",
+      "для жены",
+      "для мамы",
+      "для ребёнка"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_CHOP070_resized.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 15,
@@ -877,7 +1232,16 @@
     "url": "https://kupibuket74.ru/bukety/bukety_609.html",
     "description": null,
     "composition": null,
-    "promo": null
+    "promo": null,
+    "style": [],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "розовый"
+    ],
+    "occasions": [],
+    "recipients": []
   },
   {
     "id": 81,
@@ -1063,8 +1427,17 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_Flw_083_resized.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_523.html",
     "description": null,
-    "composition": "-Роза 35 см - 25 шт.,\n-Лента атласная - 2м.",
-    "promo": null
+    "composition": "- Роза 40 см (розовая) - 25 шт.\n- Лента атласная - 2м.",
+    "promo": null,
+    "style": [],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "розовый"
+    ],
+    "occasions": [],
+    "recipients": []
   },
   {
     "id": 98,
@@ -1657,8 +2030,32 @@
     "imageUrl": "https://kupibuket74.ru/netcat_files/5/22/preview_msg5246846366_95710.jpg",
     "url": "https://kupibuket74.ru/bukety/bukety_299.html",
     "description": null,
-    "composition": "- Роза Россия - 1001 шт.",
-    "promo": null
+    "composition": "- Роза Россия (красная) - 1001 шт.",
+    "promo": null,
+    "style": [
+      "богатый"
+    ],
+    "flowers": [
+      "роза"
+    ],
+    "colours": [
+      "красный"
+    ],
+    "occasions": [
+      "юбилей",
+      "свадьба",
+      "годовщина",
+      "предложения"
+    ],
+    "recipients": [
+      "для жены",
+      "для девушки"
+    ],
+    "images": [
+      "https://kupibuket74.ru/netcat_files/5/22/preview_msg5246846366_95710.jpg"
+    ],
+    "focusX": 0.5,
+    "focusY": 0.5
   },
   {
     "id": 152,

@@ -130,6 +130,50 @@ function detectBudget(text) {
   const result = { min: null, max: null };
   if (!text) return result;
 
+  // сначала обрабатываем форматы "5 тысяч", "5к", "5k" и т.п.
+  const thousandWord =
+    '(?:тыс(?:яч[аеий]*)?|тысяч|тысячи|тысяча|к|k)'; // разные варианты "тысяч" + k/к
+  const delta = 1500; // разброс для "примерно N тысяч"
+
+  // диапазон "от 3к до 5к"
+  const thousandRange = text.match(
+    new RegExp(`от\\s+(\\d+)\\s*${thousandWord}\\s*(?:до|-|—)\\s*(\\d+)\\s*${thousandWord}`),
+  );
+  if (thousandRange) {
+    result.min = parseInt(thousandRange[1], 10) * 1000;
+    result.max = parseInt(thousandRange[2], 10) * 1000;
+    return sanitizeBudget(result);
+  }
+
+  // строгий максимум в тысячах: "до 5к", "до 5 тысяч", "не дороже 5к"
+  const thousandStrictMax = text.match(
+    new RegExp(`(?:до|не дороже|максимум)\\s+(\\d+)\\s*${thousandWord}`),
+  );
+  if (thousandStrictMax) {
+    result.max = parseInt(thousandStrictMax[1], 10) * 1000;
+    return sanitizeBudget(result);
+  }
+
+  // "примерно N тысяч": "за 5к", "яркий букет за 5 тысяч", "около 5к", "в районе 5 тысяч"
+  const thousandCenter = text.match(
+    new RegExp(`(?:за|около|примерно|в районе)\\s+(\\d+)\\s*${thousandWord}`),
+  );
+  if (thousandCenter) {
+    const center = parseInt(thousandCenter[1], 10) * 1000;
+    result.min = Math.max(0, center - delta);
+    result.max = center + delta;
+    return sanitizeBudget(result);
+  }
+
+  // просто упоминание суммы в тысячах без служебного слова: "букет  за 5к", "что‑то на 7 тысяч"
+  const thousandLoose = text.match(new RegExp(`(\\d+)\\s*${thousandWord}`));
+  if (thousandLoose) {
+    const center = parseInt(thousandLoose[1], 10) * 1000;
+    result.min = Math.max(0, center - delta);
+    result.max = center + delta;
+    return sanitizeBudget(result);
+  }
+
   const rangeMatch = text.match(/от\s+(\d[\d\s]*)\s*(?:до|-|—)\s*(\d[\d\s]*)/);
   if (rangeMatch) {
     result.min = parseMoney(rangeMatch[1]);

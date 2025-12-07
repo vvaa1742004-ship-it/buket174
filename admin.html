@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>КупиБукет · Админка букетов</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --brand-green: #345c4a;
+      --brand-green-dark: #2f5b4f;
+      --brand-beige: #faf7f2;
+      --brand-beige-soft: #f6f3ee;
+      --brand-gray: #e4e1db;
+      --text-main: #202222;
+      --text-soft: #6b6a66;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+      --transition-fast: 0.16s ease-out;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 24px;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #faf7f2 0%, #f6f3ee 45%, #faf7f2 100%);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1240px;
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1px solid var(--brand-gray);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+      padding: 18px 18px 22px;
+    }
+
+    @media (min-width: 768px) {
+      .app-shell {
+        padding: 22px 26px 26px;
+      }
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(52, 92, 74, 0.18);
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(52, 92, 74, 0.25);
+      background: linear-gradient(145deg, #f6f3ee, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-green);
+      font-size: 18px;
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brand-green-dark);
+    }
+
+    .brand-tagline {
+      font-size: 11px;
+      color: var(--text-soft);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topbar-link {
+      font-size: 12px;
+      color: var(--brand-green-dark);
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(52, 92, 74, 0.2);
+      background: #f6f3ee;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .topbar-link:hover {
+      background: #e6ede7;
+      border-color: var(--brand-green);
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 22px;
+      color: var(--brand-green-dark);
+      margin-bottom: 4px;
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.4fr;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--brand-beige-soft);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      padding: 12px 12px 14px;
+    }
+
+    .panel--right {
+      background: #ffffff;
+    }
+
+    @media (min-width: 960px) {
+      .panel {
+        padding: 14px 14px 16px;
+      }
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4b4a46;
+    }
+
+    .panel-chip {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .bouquet-list {
+      max-height: 520px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .catalog-search {
+      margin-bottom: 8px;
+    }
+
+    .bouquet-list-item {
+      border-radius: 10px;
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      border: 1px solid transparent;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.1s ease-out;
+    }
+
+    .bouquet-list-item:hover {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(52, 92, 74, 0.26);
+      transform: translateY(-1px);
+    }
+
+    .bouquet-list-item.active {
+      background: #ffffff;
+      border-color: rgba(52, 92, 74, 0.5);
+    }
+
+    .bouquet-list-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bouquet-list-price {
+      white-space: nowrap;
+      font-size: 12px;
+      color: var(--brand-green-dark);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 0.9fr 1.4fr;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 720px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-label {
+      font-size: 12px;
+      color: #4b4a46;
+      padding-top: 6px;
+    }
+
+    .form-label small {
+      color: #a09a8f;
+      font-size: 11px;
+    }
+
+    .form-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(209, 204, 192, 0.9);
+      padding: 7px 8px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      background: #ffffff;
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform 0.08s ease-out;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      border-color: var(--brand-green);
+      box-shadow:
+        0 0 0 1px rgba(52, 92, 74, 0.2),
+        0 10px 20px rgba(0, 0, 0, 0.03);
+      transform: translateY(-0.5px);
+    }
+
+    .form-input[readonly] {
+      background: #f6f3ee;
+      color: #7b786f;
+    }
+
+    .form-textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .composition-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .composition-row {
+      display: grid;
+      grid-template-columns: 1.8fr 0.9fr 0.9fr 1.2fr auto;
+      gap: 8px;
+      align-items: center;
+      cursor: move;
+    }
+
+    @media (max-width: 960px) {
+      .composition-row {
+        grid-template-columns: 1.6fr 1.2fr;
+        grid-auto-rows: auto;
+        row-gap: 6px;
+      }
+    }
+
+    .composition-row .form-input,
+    .composition-row .form-select {
+      font-size: 12px;
+      padding: 7px 9px;
+    }
+
+    .composition-row.dragging {
+      opacity: 0.8;
+    }
+
+    .composition-remove {
+      border-radius: 999px;
+      border: 1px solid rgba(209, 204, 192, 0.9);
+      background: #ffffff;
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      color: #a09a8f;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.08s ease-out;
+    }
+
+    .composition-remove:hover {
+      background: #faf7f2;
+      border-color: #c8c2b7;
+      transform: translateY(-0.5px);
+    }
+
+    .select-inline {
+      display: flex;
+      gap: 6px;
+    }
+
+    .select-inline .form-select {
+      max-width: 160px;
+    }
+
+    .image-preview {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 16px;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #f6f3ee;
+      object-fit: cover;
+    }
+
+    .image-preview-placeholder {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 16px;
+      border: 1px dashed rgba(209, 204, 192, 0.9);
+      background: #faf7f2;
+      padding: 20px 12px;
+      font-size: 12px;
+      color: #a09a8f;
+      text-align: center;
+    }
+
+    .extra-images {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .extra-image-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .extra-image-row .form-input {
+      flex: 1;
+    }
+
+    .extra-image-thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 10px;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #f6f3ee;
+      object-fit: cover;
+    }
+
+    .extra-image-remove {
+      border-radius: 999px;
+      border: 1px solid rgba(209, 204, 192, 0.9);
+      background: #ffffff;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      color: #a09a8f;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.08s ease-out;
+    }
+
+    .extra-image-remove:hover {
+      background: #faf7f2;
+      border-color: #c8c2b7;
+      transform: translateY(-0.5px);
+    }
+
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .buttons-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 12px;
+      border: 1px solid rgba(209, 204, 192, 0.9);
+      padding: 7px 14px;
+      font-size: 13px;
+      background: #ffffff;
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.08s ease-out,
+        box-shadow 0.08s ease-out;
+    }
+
+    .btn-primary {
+      border-color: var(--brand-green);
+      background: var(--brand-green);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-green-dark);
+      border-color: var(--brand-green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-secondary:hover {
+      background: var(--brand-beige-soft);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .status-text {
+      font-size: 11px;
+      color: #7b786f;
+    }
+
+    .preview-card-panel {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(228, 225, 219, 0.9);
+    }
+
+    .preview-card {
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .preview-card-image {
+      width: 100%;
+      height: auto;
+      background: #f6f3ee;
+      object-fit: contain;
+      border-bottom: 1px solid rgba(228, 225, 219, 0.9);
+      display: block;
+    }
+
+    .preview-card-body {
+      padding: 8px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .preview-card-title {
+      font-family: "Playfair Display", "Times New Roman", serif;
+      font-size: 14px;
+      color: #262723;
+    }
+
+    .preview-card-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .preview-card-price {
+      font-weight: 600;
+      color: var(--brand-green-dark);
+    }
+
+    .preview-card-price-old {
+      font-size: 11px;
+      color: #a09a8f;
+      text-decoration: line-through;
+    }
+
+    .preview-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .preview-card-tag {
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #f6f3ee;
+      color: #55524b;
+      font-size: 10px;
+    }
+
+    .preview-card-composition {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #5c574f;
+    }
+
+    .preview-card-composition-title {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .preview-card-composition-body {
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">KB</div>
+        <div class="brand-titles">
+          <div class="brand-name">КупиБукет</div>
+          <div class="brand-tagline">Админка букетов</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="/" class="topbar-link">← Вернуться к подбору</a>
+      </div>
+    </header>
+
+    <h1 class="hero-title">Редактирование каталога букетов</h1>
+    <p class="hero-subtitle">
+      Слева список букетов из файла, справа — форма для изменения параметров. Можно обновлять данные и
+      добавлять новые позиции. Изменения сохраняются в <strong>bouquets_test_output.json</strong>.
+    </p>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Каталог</div>
+          <div class="panel-chip" id="bouquetsCount">Букетов: 0</div>
+        </div>
+        <div class="catalog-search">
+          <input
+            id="catalogSearch"
+            class="form-input"
+            type="text"
+            placeholder="Поиск по названию или ID…"
+          />
+        </div>
+        <div id="bouquetList" class="bouquet-list"></div>
+
+        <div class="preview-card-panel">
+          <div class="panel-header" style="margin-bottom:4px;">
+            <div class="panel-title">Превью карточки</div>
+          </div>
+          <div id="cardPreview" class="preview-card"></div>
+        </div>
+      </section>
+
+      <section class="panel panel--right">
+        <div class="panel-header">
+          <div class="panel-title">Параметры букета</div>
+          <div class="panel-chip" id="formModeLabel">Режим: просмотр</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">ID</div>
+          <div class="form-field-group">
+            <input id="field-id" class="form-input" type="text" readonly />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">Название букета</div>
+          <div class="form-field-group">
+            <input id="field-name" class="form-input" type="text" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">Цена</div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-price" class="form-input" type="number" min="0" step="1" />
+              <input id="field-currency" class="form-input" type="text" style="max-width: 80px;" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Скидка
+            <br />
+            <small>discountPercent / discountedPrice</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input
+                id="field-discountPercent"
+                class="form-input"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="% скидки"
+              />
+              <input
+                id="field-discountedPrice"
+                class="form-input"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Цена со скидкой"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Ссылка на страницу
+            <br />
+            <small>url</small>
+          </div>
+          <div class="form-field-group">
+            <input id="field-url" class="form-input" type="text" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Ссылка на фото
+            <br />
+            <small>imageUrl / images</small>
+          </div>
+          <div class="form-field-group">
+            <input id="field-imageUrl" class="form-input" type="text" />
+            <div id="imagePreviewContainer">
+              <div class="image-preview-placeholder">
+                Фото будет показано здесь, когда указан корректный imageUrl.
+              </div>
+            </div>
+            <div id="extraImagesContainer" class="extra-images"></div>
+            <button id="addImageBtn" type="button" class="btn btn-secondary" style="align-self:flex-start;">
+              Добавить фото
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Описание
+            <br />
+            <small>description</small>
+          </div>
+          <div class="form-field-group">
+            <textarea id="field-description" class="form-input form-textarea"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Состав
+            <br />
+            <small>composition</small>
+          </div>
+          <div class="form-field-group">
+            <div id="compositionRows" class="composition-rows"></div>
+            <button
+              id="addCompositionRowBtn"
+              type="button"
+              class="btn btn-secondary"
+              style="align-self:flex-start;"
+            >
+              Добавить позицию
+            </button>
+            <textarea
+              id="field-composition"
+              class="form-input form-textarea"
+              style="display:none;"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Цветы
+            <br />
+            <small>flowers (через запятую)</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-flowers" class="form-input" type="text" />
+              <select id="select-flowers" class="form-select">
+                <option value="">+ из списка</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Цвета
+            <br />
+            <small>colours (через запятую)</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-colours" class="form-input" type="text" />
+              <select id="select-colours" class="form-select">
+                <option value="">+ из списка</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Стиль
+            <br />
+            <small>style (через запятую)</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-style" class="form-input" type="text" />
+              <select id="select-style" class="form-select">
+                <option value="">+ из списка</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Поводы
+            <br />
+            <small>occasions (через запятую)</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-occasions" class="form-input" type="text" />
+              <select id="select-occasions" class="form-select">
+                <option value="">+ из списка</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">
+            Получатели
+            <br />
+            <small>recipients (через запятую)</small>
+          </div>
+          <div class="form-field-group">
+            <div class="select-inline">
+              <input id="field-recipients" class="form-input" type="text" />
+              <select id="select-recipients" class="form-select">
+                <option value="">+ из списка</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons-row">
+          <div class="buttons-group">
+            <button id="addNewBtn" class="btn btn-secondary" type="button">
+              Добавить новый букет
+            </button>
+            <button id="saveBtn" class="btn btn-primary" type="button">
+              Сохранить
+            </button>
+          </div>
+          <div id="statusText" class="status-text"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <datalist id="comp-color-options">
+    <option value="красная"></option>
+    <option value="белая"></option>
+    <option value="розовая"></option>
+    <option value="кремовая"></option>
+    <option value="бордовая"></option>
+    <option value="микс"></option>
+  </datalist>
+
+  <script>
+    const bouquetListEl = document.getElementById("bouquetList");
+    const bouquetsCountEl = document.getElementById("bouquetsCount");
+    const formModeLabel = document.getElementById("formModeLabel");
+    const statusText = document.getElementById("statusText");
+    const catalogSearchInput = document.getElementById("catalogSearch");
+
+    const fieldId = document.getElementById("field-id");
+    const fieldName = document.getElementById("field-name");
+    const fieldPrice = document.getElementById("field-price");
+    const fieldCurrency = document.getElementById("field-currency");
+    const fieldUrl = document.getElementById("field-url");
+    const fieldImageUrl = document.getElementById("field-imageUrl");
+    const fieldDescription = document.getElementById("field-description");
+    const fieldComposition = document.getElementById("field-composition");
+    const fieldFlowers = document.getElementById("field-flowers");
+    const fieldColours = document.getElementById("field-colours");
+    const fieldStyle = document.getElementById("field-style");
+    const fieldOccasions = document.getElementById("field-occasions");
+    const fieldRecipients = document.getElementById("field-recipients");
+
+    const selectFlowers = document.getElementById("select-flowers");
+    const selectColours = document.getElementById("select-colours");
+    const selectStyle = document.getElementById("select-style");
+    const selectOccasions = document.getElementById("select-occasions");
+    const selectRecipients = document.getElementById("select-recipients");
+
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    const extraImagesContainer = document.getElementById("extraImagesContainer");
+    const addImageBtn = document.getElementById("addImageBtn");
+    const compositionRowsEl = document.getElementById("compositionRows");
+    const addCompositionRowBtn = document.getElementById("addCompositionRowBtn");
+    const fieldDiscountPercent = document.getElementById("field-discountPercent");
+    const fieldDiscountedPrice = document.getElementById("field-discountedPrice");
+    const addNewBtn = document.getElementById("addNewBtn");
+    const saveBtn = document.getElementById("saveBtn");
+
+    let bouquets = [];
+    let currentId = null;
+    let currentMode = "view";
+    let currentFocusX = 0.5;
+    let currentFocusY = 0.5;
+
+    const optionSets = {
+      flowers: new Set(),
+      colours: new Set(),
+      style: new Set(),
+      occasions: new Set(),
+      recipients: new Set(),
+    };
+
+    const fixedOptions = {
+      occasions: [
+        "день рождения",
+        "юбилей",
+        "свадьба",
+        "свидание",
+        "8 марта",
+        "1 сентября",
+        "новый год",
+      ],
+      recipients: [
+        "для жены",
+        "для девушки",
+        "для мамы",
+        "для коллеги",
+        "для начальника",
+        "для ребёнка",
+      ],
+      style: ["нежный", "минимализм", "классический", "яркий", "богатый", "моно-букет", "рустик"],
+      colours: ["белый", "красный", "розовый", "бордовый", "пастельный", "мультиколор", "жёлтый"],
+    };
+
+    function setStatus(message, isError) {
+      statusText.textContent = message || "";
+      statusText.style.color = isError ? "#8a4b4b" : "#7b786f";
+    }
+
+    function toCsv(value) {
+      if (Array.isArray(value)) {
+        return value.join(", ");
+      }
+      if (typeof value === "string") {
+        return value;
+      }
+      return "";
+    }
+
+    function parseCsv(value) {
+      if (!value) return [];
+      return value
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function updateMainImagePreview() {
+      const url = fieldImageUrl.value.trim();
+      if (!url) {
+        imagePreviewContainer.innerHTML =
+          '<div class="image-preview-placeholder">Фото будет показано здесь, когда указан корректный imageUrl.</div>';
+        return;
+      }
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Предпросмотр букета";
+      img.className = "image-preview";
+      imagePreviewContainer.innerHTML = "";
+      imagePreviewContainer.appendChild(img);
+    }
+
+    function createExtraImageRow(url) {
+      const row = document.createElement("div");
+      row.className = "extra-image-row";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "form-input extra-image-input";
+      input.value = url || "";
+
+      const thumb = document.createElement("img");
+      thumb.className = "extra-image-thumb";
+      if (url) {
+        thumb.src = url;
+      }
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "extra-image-remove";
+      removeBtn.textContent = "×";
+
+      input.addEventListener("input", () => {
+        const v = input.value.trim();
+        if (!v) {
+          thumb.removeAttribute("src");
+        } else {
+          thumb.src = v;
+        }
+      });
+
+      removeBtn.addEventListener("click", () => {
+        extraImagesContainer.removeChild(row);
+      });
+
+      row.appendChild(input);
+      row.appendChild(thumb);
+      row.appendChild(removeBtn);
+      return row;
+    }
+
+    function renderExtraImages(urls) {
+      extraImagesContainer.innerHTML = "";
+      (urls || []).forEach((u) => {
+        extraImagesContainer.appendChild(createExtraImageRow(u));
+      });
+    }
+
+    function getAllImagesFromForm() {
+      const urls = [];
+      const main = fieldImageUrl.value.trim();
+      if (main) urls.push(main);
+      extraImagesContainer.querySelectorAll(".extra-image-input").forEach((input) => {
+        const v = input.value.trim();
+        if (v && !urls.includes(v)) urls.push(v);
+      });
+      return urls;
+    }
+
+    function getDragAfterElement(container, y) {
+      const rows = [...container.querySelectorAll(".composition-row:not(.dragging)")];
+      return rows.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset, element: child };
+          }
+          return closest;
+        },
+        { offset: Number.NEGATIVE_INFINITY, element: null },
+      ).element;
+    }
+
+    function createCompositionRow(data) {
+      const row = document.createElement("div");
+      row.className = "composition-row";
+      row.setAttribute("draggable", "true");
+
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.className = "form-input comp-name";
+      nameInput.placeholder = "Наименование (например, Роза)";
+      nameInput.value = data && data.name ? data.name : "";
+
+      const stemSelect = document.createElement("select");
+      stemSelect.className = "form-select comp-stem";
+      const stemValues = [
+        "",
+        "40 см",
+        "50 см",
+        "60 см",
+        "70 см",
+        "80 см",
+        "90 см",
+        "100 см",
+        "120 см",
+      ];
+      stemValues.forEach((v) => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v || "Ростовка";
+        stemSelect.appendChild(opt);
+      });
+      if (data && data.stem && stemValues.includes(data.stem)) {
+        stemSelect.value = data.stem;
+      }
+
+      const colorInput = document.createElement("input");
+      colorInput.type = "text";
+      colorInput.className = "form-input comp-color";
+      colorInput.placeholder = "Цвет";
+      colorInput.setAttribute("list", "comp-color-options");
+      if (data && data.color) {
+        colorInput.value = data.color;
+      }
+
+      const qtyInput = document.createElement("input");
+      qtyInput.type = "text";
+      qtyInput.className = "form-input comp-qty";
+      qtyInput.placeholder = "Количество";
+      qtyInput.value = data && data.quantity ? data.quantity : "";
+
+      const qtySelect = document.createElement("select");
+      qtySelect.className = "form-select comp-qty-select";
+      const qtyOptions = ["", "1 шт.", "3 шт.", "5 шт.", "7 шт.", "15 шт.", "25 шт.", "51 шт."];
+      qtyOptions.forEach((v) => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v || "Из списка";
+        qtySelect.appendChild(opt);
+      });
+
+      qtySelect.addEventListener("change", () => {
+        if (qtySelect.value) {
+          qtyInput.value = qtySelect.value;
+          qtySelect.value = "";
+        }
+      });
+
+      qtyInput.addEventListener("blur", () => {
+        const raw = qtyInput.value.trim();
+        if (!raw) return;
+        const numericOnly = /^(\d+([.,]\d+)?)$/;
+        if (numericOnly.test(raw)) {
+          qtyInput.value = `${raw} шт.`;
+        }
+      });
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "composition-remove";
+      removeBtn.textContent = "×";
+
+      removeBtn.addEventListener("click", () => {
+        compositionRowsEl.removeChild(row);
+        updateCardPreview();
+      });
+
+      row.addEventListener("dragstart", (e) => {
+        row.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+      });
+
+      row.addEventListener("dragend", () => {
+        row.classList.remove("dragging");
+        updateCardPreview();
+      });
+
+      row.appendChild(nameInput);
+      row.appendChild(stemSelect);
+      row.appendChild(colorInput);
+      row.appendChild(qtyInput);
+      row.appendChild(qtySelect);
+      row.appendChild(removeBtn);
+
+      return row;
+    }
+
+    function parseCompositionText(text) {
+      if (!text) return [];
+      const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+      const result = [];
+      lines.forEach((line) => {
+        let raw = line;
+        if (raw.startsWith("-")) {
+          raw = raw.slice(1).trim();
+        }
+        let quantity = "";
+        const idx = raw.lastIndexOf(" - ");
+        if (idx !== -1) {
+          quantity = raw.slice(idx + 3).trim();
+          raw = raw.slice(0, idx).trim();
+        }
+
+        let color = "";
+        const colorMatch = raw.match(/^(.*)\(([^)]+)\)\s*$/);
+        if (colorMatch) {
+          raw = colorMatch[1].trim();
+          color = colorMatch[2].trim();
+        }
+
+        let stem = "";
+        const stemMatch = raw.match(/(40|50|60|70|80|90|100|120)\s*см/);
+        if (stemMatch) {
+          stem = stemMatch[0].replace(/\s+/g, " ");
+          raw = raw.replace(stemMatch[0], "").trim();
+        }
+
+        const name = raw;
+        result.push({ name, stem, color, quantity });
+      });
+      return result;
+    }
+
+    function buildCompositionTextFromRows() {
+      const lines = [];
+      compositionRowsEl.querySelectorAll(".composition-row").forEach((row) => {
+        const name = row.querySelector(".comp-name").value.trim();
+        const stem = row.querySelector(".comp-stem").value.trim();
+        const color = row.querySelector(".comp-color").value.trim();
+        const qtyInput = row.querySelector(".comp-qty").value.trim();
+
+        if (!name && !qtyInput) return;
+
+        let left = name;
+        if (stem) left += (left ? " " : "") + stem;
+        if (color) left += (left ? " " : "") + `(${color})`;
+
+        let line = left ? `- ${left}` : "-";
+        if (qtyInput) {
+          line += ` - ${qtyInput}`;
+        }
+        lines.push(line);
+      });
+      return lines.join("\n");
+    }
+
+    function collectOptionsFromBouquets() {
+      Object.keys(optionSets).forEach((key) => optionSets[key].clear());
+
+      bouquets.forEach((b) => {
+        const fields = {
+          flowers: b.flowers,
+          colours: b.colours,
+          style: b.style,
+          occasions: b.occasions,
+          recipients: b.recipients,
+        };
+        Object.entries(fields).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            value.forEach((v) => {
+              if (typeof v === "string") {
+                const trimmed = v.trim();
+                if (trimmed) optionSets[key].add(trimmed);
+              }
+            });
+          }
+        });
+      });
+
+      // добавляем фиксированные значения
+      Object.entries(fixedOptions).forEach(([key, values]) => {
+        values.forEach((v) => optionSets[key].add(v));
+      });
+
+      function fillSelect(selectEl, set) {
+        const current = selectEl.value;
+        selectEl.innerHTML = "";
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "+ из списка";
+        selectEl.appendChild(placeholder);
+        Array.from(set)
+          .sort((a, b) => a.localeCompare(b, "ru"))
+          .forEach((value) => {
+            const opt = document.createElement("option");
+            opt.value = value;
+            opt.textContent = value;
+            selectEl.appendChild(opt);
+          });
+        selectEl.value = current || "";
+      }
+
+      fillSelect(selectFlowers, optionSets.flowers);
+      fillSelect(selectColours, optionSets.colours);
+      fillSelect(selectStyle, optionSets.style);
+      fillSelect(selectOccasions, optionSets.occasions);
+      fillSelect(selectRecipients, optionSets.recipients);
+    }
+
+    function renderBouquetList() {
+      bouquetListEl.innerHTML = "";
+      let list = bouquets;
+      const termRaw = catalogSearchInput ? catalogSearchInput.value.trim() : "";
+      const term = termRaw.toLowerCase();
+      if (term) {
+        const numeric = /^\d+$/.test(termRaw);
+        const idNum = numeric ? parseInt(termRaw, 10) : null;
+        list = bouquets.filter((b) => {
+          const name = (b.name || "").toLowerCase();
+          const nameMatch = name.includes(term);
+          const idMatch = idNum != null && parseInt(String(b.id), 10) === idNum;
+          return nameMatch || idMatch;
+        });
+      }
+
+      list.forEach((b) => {
+        const item = document.createElement("div");
+        item.className = "bouquet-list-item";
+        item.dataset.id = String(b.id);
+
+        const nameEl = document.createElement("div");
+        nameEl.className = "bouquet-list-name";
+        nameEl.textContent = b.name || `Букет #${b.id}`;
+
+        const priceEl = document.createElement("div");
+        priceEl.className = "bouquet-list-price";
+
+        if (typeof b.price === "number") {
+          priceEl.textContent = `${b.price.toLocaleString("ru-RU")} ${b.currency || "₽"}`;
+        } else {
+          priceEl.textContent = "—";
+        }
+
+        item.appendChild(nameEl);
+        item.appendChild(priceEl);
+
+        item.addEventListener("click", () => {
+          selectBouquet(b.id);
+        });
+
+        bouquetListEl.appendChild(item);
+      });
+
+      bouquetsCountEl.textContent = `Букетов: ${bouquets.length}`;
+      const first = list[0];
+      if (first && currentId == null) {
+        selectBouquet(first.id);
+      } else if (currentId != null) {
+        highlightActiveItem();
+      }
+    }
+
+    function highlightActiveItem() {
+      const items = bouquetListEl.querySelectorAll(".bouquet-list-item");
+      items.forEach((el) => {
+        if (String(el.dataset.id) === String(currentId)) {
+          el.classList.add("active");
+        } else {
+          el.classList.remove("active");
+        }
+      });
+    }
+
+    function fillForm(bouquet) {
+      fieldId.value = bouquet.id != null ? String(bouquet.id) : "";
+      fieldName.value = bouquet.name || "";
+      fieldPrice.value =
+        typeof bouquet.price === "number" && Number.isFinite(bouquet.price)
+          ? String(bouquet.price)
+          : "";
+      fieldCurrency.value = bouquet.currency || "₽";
+      fieldUrl.value = bouquet.url || "";
+      const images = Array.isArray(bouquet.images) ? [...bouquet.images] : [];
+      if (bouquet.imageUrl && !images.includes(bouquet.imageUrl)) {
+        images.unshift(bouquet.imageUrl);
+      }
+      fieldImageUrl.value = images[0] || "";
+      fieldDescription.value = bouquet.description || "";
+      fieldComposition.value = bouquet.composition || "";
+
+      fieldFlowers.value = toCsv(bouquet.flowers);
+      fieldColours.value = toCsv(bouquet.colours);
+      fieldStyle.value = toCsv(bouquet.style);
+      fieldOccasions.value = toCsv(bouquet.occasions);
+      fieldRecipients.value = toCsv(bouquet.recipients);
+
+      currentFocusX =
+        typeof bouquet.focusX === "number" && Number.isFinite(bouquet.focusX)
+          ? bouquet.focusX
+          : 0.5;
+      currentFocusY =
+        typeof bouquet.focusY === "number" && Number.isFinite(bouquet.focusY)
+          ? bouquet.focusY
+          : 0.5;
+
+      fieldDiscountPercent.value =
+        typeof bouquet.discountPercent === "number" ? String(bouquet.discountPercent) : "";
+      fieldDiscountedPrice.value =
+        typeof bouquet.discountedPrice === "number" ? String(bouquet.discountedPrice) : "";
+
+      renderExtraImages(images.slice(1));
+
+      const parsedComp = parseCompositionText(fieldComposition.value);
+      compositionRowsEl.innerHTML = "";
+      if (parsedComp.length) {
+        parsedComp.forEach((row) => {
+          compositionRowsEl.appendChild(createCompositionRow(row));
+        });
+      } else {
+        compositionRowsEl.appendChild(createCompositionRow());
+      }
+
+      updateMainImagePreview();
+      updateCardPreview();
+    }
+
+    function selectBouquet(id) {
+      const found = bouquets.find((b) => String(b.id) === String(id));
+      if (!found) return;
+      currentId = found.id;
+      currentMode = "edit";
+      formModeLabel.textContent = "Режим: редактирование";
+      highlightActiveItem();
+      fillForm(found);
+      setStatus("Редактирование существующего букета", false);
+    }
+
+    function startNewBouquet() {
+      currentId = null;
+      currentMode = "new";
+      formModeLabel.textContent = "Режим: создание нового букета";
+      bouquetListEl
+        .querySelectorAll(".bouquet-list-item")
+        .forEach((el) => el.classList.remove("active"));
+
+      fieldId.value = "(новый)";
+      fieldName.value = "";
+      fieldPrice.value = "";
+      fieldCurrency.value = "₽";
+      fieldUrl.value = "";
+      fieldImageUrl.value = "";
+      fieldDescription.value = "";
+      fieldComposition.value = "";
+      fieldFlowers.value = "";
+      fieldColours.value = "";
+      fieldStyle.value = "";
+      fieldOccasions.value = "";
+      fieldRecipients.value = "";
+      fieldDiscountPercent.value = "";
+      fieldDiscountedPrice.value = "";
+      currentFocusX = 0.5;
+      currentFocusY = 0.5;
+
+      compositionRowsEl.innerHTML = "";
+      compositionRowsEl.appendChild(createCompositionRow());
+      renderExtraImages([]);
+      updateMainImagePreview();
+      updateCardPreview();
+      setStatus("Заполните поля и нажмите «Сохранить», чтобы добавить новый букет", false);
+    }
+
+    function collectFormData() {
+      const name = fieldName.value.trim();
+      const price = fieldPrice.value.trim();
+      if (!name || !price) {
+        throw new Error("Поля «Название букета» и «Цена» обязательны");
+      }
+
+      fieldComposition.value = buildCompositionTextFromRows();
+
+      const images = getAllImagesFromForm();
+
+      const payload = {
+        name,
+        price,
+        currency: fieldCurrency.value.trim() || "₽",
+        url: fieldUrl.value.trim(),
+        imageUrl: fieldImageUrl.value.trim(),
+        description: fieldDescription.value,
+        composition: fieldComposition.value,
+        flowers: parseCsv(fieldFlowers.value),
+        colours: parseCsv(fieldColours.value),
+        style: parseCsv(fieldStyle.value),
+        occasions: parseCsv(fieldOccasions.value),
+        recipients: parseCsv(fieldRecipients.value),
+        images,
+        discountPercent: fieldDiscountPercent.value.trim(),
+        discountedPrice: fieldDiscountedPrice.value.trim(),
+        focusX: currentFocusX,
+        focusY: currentFocusY,
+      };
+
+      return payload;
+    }
+
+    function appendFromSelect(selectEl, fieldEl) {
+      const value = selectEl.value;
+      if (!value) return;
+      const parts = parseCsv(fieldEl.value);
+      if (!parts.includes(value)) {
+        parts.push(value);
+        fieldEl.value = parts.join(", ");
+      }
+      selectEl.value = "";
+    }
+
+    async function loadBouquets() {
+      setStatus("Загружаем букет…", false);
+      try {
+        const response = await fetch("/api/bouquets");
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+        bouquets = await response.json();
+        collectOptionsFromBouquets();
+        renderBouquetList();
+        setStatus("Данные загружены", false);
+      } catch (err) {
+        console.error(err);
+        setStatus("Не удалось получить список букетов. Проверьте сервер.", true);
+      }
+    }
+
+    async function saveCurrent() {
+      let payload;
+      try {
+        payload = collectFormData();
+      } catch (err) {
+        setStatus(err.message, true);
+        return;
+      }
+
+      try {
+        let response;
+        if (currentMode === "new" || !currentId) {
+          response = await fetch("/api/bouquets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        } else {
+          response = await fetch(`/api/bouquets/${currentId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+        }
+
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => null);
+          const message = errorBody && errorBody.error ? errorBody.error : "Ошибка сохранения";
+          throw new Error(message);
+        }
+
+        const saved = await response.json();
+        currentId = saved.id;
+        currentMode = "edit";
+        formModeLabel.textContent = "Режим: редактирование";
+        setStatus("Изменения сохранены", false);
+        await loadBouquets();
+        highlightActiveItem();
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message || "Не удалось сохранить изменения", true);
+      }
+    }
+
+    fieldImageUrl.addEventListener("input", updateMainImagePreview);
+
+    selectFlowers.addEventListener("change", () => appendFromSelect(selectFlowers, fieldFlowers));
+    selectColours.addEventListener("change", () => appendFromSelect(selectColours, fieldColours));
+    selectStyle.addEventListener("change", () => appendFromSelect(selectStyle, fieldStyle));
+    selectOccasions.addEventListener("change", () =>
+      appendFromSelect(selectOccasions, fieldOccasions),
+    );
+    selectRecipients.addEventListener("change", () =>
+      appendFromSelect(selectRecipients, fieldRecipients),
+    );
+
+    addNewBtn.addEventListener("click", startNewBouquet);
+    saveBtn.addEventListener("click", saveCurrent);
+
+    if (catalogSearchInput) {
+      catalogSearchInput.addEventListener("input", renderBouquetList);
+    }
+
+    addImageBtn.addEventListener("click", () => {
+      extraImagesContainer.appendChild(createExtraImageRow(""));
+    });
+
+    function parseNumberSafe(value) {
+      if (value == null || String(value).trim() === "") return null;
+      const num = Number(String(value).replace(/\s+/g, ""));
+      return Number.isNaN(num) ? null : num;
+    }
+
+    function updateDiscountFromPercent() {
+      const price = parseNumberSafe(fieldPrice.value);
+      const percent = parseNumberSafe(fieldDiscountPercent.value);
+      if (price == null || percent == null) return;
+      const rawFinal = price * (1 - percent / 100);
+      const final = Math.round(rawFinal);
+      fieldDiscountedPrice.value = String(final);
+    }
+
+    function updateDiscountFromFinalPrice() {
+      const price = parseNumberSafe(fieldPrice.value);
+      let final = parseNumberSafe(fieldDiscountedPrice.value);
+      if (price == null || final == null || price === 0) return;
+      final = Math.round(final);
+      fieldDiscountedPrice.value = String(final);
+      const percent = (1 - final / price) * 100;
+      const rounded = Math.round(percent * 100) / 100;
+      fieldDiscountPercent.value = String(rounded);
+    }
+
+    fieldDiscountPercent.addEventListener("blur", updateDiscountFromPercent);
+    fieldDiscountedPrice.addEventListener("blur", updateDiscountFromFinalPrice);
+
+    compositionRowsEl.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(compositionRowsEl, e.clientY);
+      const dragging = compositionRowsEl.querySelector(".composition-row.dragging");
+      if (!dragging) return;
+      if (afterElement == null) {
+        compositionRowsEl.appendChild(dragging);
+      } else {
+        compositionRowsEl.insertBefore(dragging, afterElement);
+      }
+    });
+
+    const cardPreviewEl = document.getElementById("cardPreview");
+
+    function updateCardPreview() {
+      if (!cardPreviewEl) return;
+      const name = fieldName.value.trim() || "Название букета";
+      const price = parseNumberSafe(fieldPrice.value);
+      const currency = fieldCurrency.value.trim() || "₽";
+      const discounted = parseNumberSafe(fieldDiscountedPrice.value);
+      const flowers = parseCsv(fieldFlowers.value);
+      const style = parseCsv(fieldStyle.value);
+      const occasions = parseCsv(fieldOccasions.value);
+      const recipients = parseCsv(fieldRecipients.value);
+      const imgUrl = fieldImageUrl.value.trim();
+      const compositionText = buildCompositionTextFromRows();
+
+      const tags = [];
+      if (flowers.length) tags.push(flowers[0]);
+      if (style.length) tags.push(style[0]);
+      if (occasions.length) tags.push(occasions[0]);
+      if (recipients.length) tags.push(recipients[0]);
+
+      const priceHtml =
+        discounted != null && price != null && discounted !== price
+          ? `<div class="preview-card-price-row">
+               <span class="preview-card-price">${discounted.toLocaleString("ru-RU")} ${currency}</span>
+               <span class="preview-card-price-old">${price.toLocaleString("ru-RU")} ${currency}</span>
+             </div>`
+          : `<div class="preview-card-price-row">
+               <span class="preview-card-price">${
+                 price != null ? price.toLocaleString("ru-RU") : "—"
+               } ${currency}</span>
+             </div>`;
+
+      const tagsHtml =
+        tags.length > 0
+          ? `<div class="preview-card-tags">${tags
+              .map((t) => `<span class="preview-card-tag">${t}</span>`)
+              .join("")}</div>`
+          : "";
+
+      const compositionHtml = compositionText
+        ? `<div class="preview-card-composition">
+             <div class="preview-card-composition-title">Состав</div>
+             <div class="preview-card-composition-body">${compositionText}</div>
+           </div>`
+        : "";
+
+      cardPreviewEl.innerHTML = `
+        ${imgUrl ? `<img src="${imgUrl}" alt="${name}" class="preview-card-image">` : `<div class="preview-card-image"></div>`}
+        <div class="preview-card-body">
+          <div class="preview-card-title">${name}</div>
+          ${priceHtml}
+          ${tagsHtml}
+          ${compositionHtml}
+        </div>
+      `;
+    }
+
+    [
+      fieldName,
+      fieldPrice,
+      fieldCurrency,
+      fieldDiscountPercent,
+      fieldDiscountedPrice,
+      fieldFlowers,
+      fieldStyle,
+      fieldOccasions,
+      fieldRecipients,
+      fieldImageUrl,
+    ].forEach((el) => {
+      el.addEventListener("input", updateCardPreview);
+    });
+
+    loadBouquets();
+  </script>
+</body>
+</html>
