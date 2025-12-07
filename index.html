@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Atelier Bouquet · AI-подбор букета</title>
+  <title>КупиБукет · AI-подбор букета</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,20 +18,19 @@
     }
 
     :root {
-      --bg-gradient: radial-gradient(circle at top left, #ffe7f2 0%, #fdf5f0 40%, #f5f0ff 100%);
-      --accent-main: #f58ba8;
-      --accent-soft: #fbcfdc;
-      --accent-gold: #d9b37a;
-      --text-main: #1f2933;
-      --text-soft: #6b7280;
-      --border-soft: rgba(255, 255, 255, 0.7);
-      --glass-bg: rgba(255, 255, 255, 0.32);
-      --glass-strong: rgba(255, 255, 255, 0.58);
-      --shadow-soft: 0 26px 80px rgba(15, 23, 42, 0.28);
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-pill: 999px;
+      --brand-green: #345c4a;
+      --brand-green-dark: #2f5b4f;
+      --brand-beige: #faf7f2;
+      --brand-beige-soft: #f6f3ee;
+      --brand-gray: #e4e1db;
+      --accent-rose: #e7b5b5;
+      --accent-wine: #8a4b4b;
+      --text-main: #202222;
+      --text-soft: #6b6a66;
       --transition-fast: 0.18s ease-out;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
     }
 
     body {
@@ -42,9 +41,7 @@
       padding: 24px;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text-main);
-      background: var(--bg-gradient);
-      position: relative;
-      overflow-x: hidden;
+      background: radial-gradient(circle at top left, #faf7f2 0%, #f6f3ee 45%, #faf7f2 100%);
     }
 
     @media (max-width: 768px) {
@@ -53,78 +50,30 @@
       }
     }
 
-    .floral-orb {
-      position: fixed;
-      border-radius: 999px;
-      filter: blur(36px);
-      opacity: 0.65;
-      pointer-events: none;
-      z-index: 0;
-      mix-blend-mode: soft-light;
-      transform: translate3d(0, 0, 0);
-      transition: transform 0.3s ease-out;
-    }
-
-    .floral-orb--pink {
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, #ffd5e5 0%, #fbcfdc 40%, transparent 70%);
-      top: -60px;
-      left: -40px;
-    }
-
-    .floral-orb--lavender {
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, #e2d6ff 0%, #cabffd 35%, transparent 70%);
-      bottom: -40px;
-      right: 0;
-    }
-
-    .floral-orb--peach {
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, #ffe4c4 0%, #faccb5 40%, transparent 70%);
-      top: 40%;
-      right: 50%;
-    }
-
     .app-shell {
-      position: relative;
-      z-index: 1;
       width: 100%;
       max-width: 1180px;
-      background: var(--glass-bg);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(26px) saturate(140%);
-      padding: 22px 18px 26px;
-      overflow: hidden;
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1px solid var(--brand-gray);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+      padding: 18px 18px 24px;
     }
 
     @media (min-width: 768px) {
       .app-shell {
-        padding: 26px 32px 32px;
+        padding: 22px 28px 28px;
       }
     }
 
-    .app-header {
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0.62),
-        rgba(255, 255, 255, 0.34)
-      );
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 16px 34px rgba(148, 163, 184, 0.35);
-      margin-bottom: 22px;
-      backdrop-filter: blur(26px);
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(52, 92, 74, 0.18);
+      margin-bottom: 18px;
     }
 
     .brand {
@@ -136,61 +85,73 @@
     .brand-mark {
       width: 32px;
       height: 32px;
-      border-radius: 12px;
-      background: conic-gradient(from 160deg, #fbcfdc, #fce7f3, #e4ddff, #fde1d0, #fbcfdc);
+      border-radius: 10px;
+      border: 1px solid rgba(52, 92, 74, 0.25);
+      background: linear-gradient(145deg, #f6f3ee, #ffffff);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 26px rgba(248, 113, 150, 0.5);
+      color: var(--brand-green);
       font-size: 18px;
     }
 
     .brand-titles {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
     }
 
     .brand-name {
       font-family: "Playfair Display", "Times New Roman", serif;
       font-size: 18px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
+      color: var(--brand-green-dark);
     }
 
     .brand-tagline {
       font-size: 11px;
-      text-transform: uppercase;
+      color: var(--text-soft);
       letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .topbar-phone {
+      font-size: 12px;
       color: var(--text-soft);
     }
 
-    .header-pill {
+    .topbar-phone strong {
+      color: var(--brand-green-dark);
+    }
+
+    .ai-pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 11px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(52, 92, 74, 0.32);
+      background: #f6f3ee;
       font-size: 11px;
-      color: var(--text-soft);
-      white-space: nowrap;
+      color: var(--brand-green-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
-    .header-pill-dot {
-      width: 8px;
-      height: 8px;
+    .ai-pill-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
-    }
-
-    @media (max-width: 640px) {
-      .app-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      background: var(--brand-green);
     }
 
     .hero {
@@ -202,27 +163,19 @@
 
     .hero-title {
       font-family: "Playfair Display", "Times New Roman", serif;
-      font-size: 28px;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
+      font-size: 26px;
+      line-height: 1.2;
+      color: var(--brand-green-dark);
     }
 
-    .hero-title span {
-      background: linear-gradient(120deg, #f9739a, #f59e0b, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .hero-highlight {
+      color: var(--accent-rose);
     }
 
     .hero-subtitle {
       font-size: 14px;
       color: var(--text-soft);
       max-width: 620px;
-    }
-
-    .hero-subtitle strong {
-      font-weight: 600;
-      color: #4b5563;
     }
 
     .layout {
@@ -238,30 +191,19 @@
     }
 
     .panel {
-      background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.88),
-        rgba(255, 255, 255, 0.74)
-      );
+      background: var(--brand-beige-soft);
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      padding: 18px 16px 18px;
-      box-shadow: 0 18px 46px rgba(148, 163, 184, 0.25);
-      position: relative;
-      overflow: hidden;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      padding: 16px 16px 18px;
     }
 
     .panel--results {
-      background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.95),
-        rgba(255, 250, 252, 0.9)
-      );
+      background: #ffffff;
     }
 
     @media (min-width: 960px) {
       .panel {
-        padding: 20px 20px 22px;
+        padding: 18px 18px 20px;
       }
     }
 
@@ -270,7 +212,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .panel-title {
@@ -278,23 +220,23 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #4b5563;
+      color: #4b4a46;
     }
 
     .panel-chip {
       font-size: 11px;
       padding: 3px 10px;
-      border-radius: 999px;
-      background: rgba(250, 232, 255, 0.9);
-      color: #6d28d9;
-      border: 1px solid rgba(237, 233, 254, 0.9);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #ffffff;
+      color: var(--text-soft);
       white-space: nowrap;
     }
 
     .input-label {
       font-size: 12px;
       font-weight: 500;
-      color: #4b5563;
+      color: #4b4a46;
       margin-bottom: 6px;
     }
 
@@ -307,35 +249,29 @@
       width: 100%;
       min-height: 130px;
       resize: vertical;
-      border-radius: 20px;
-      border: 1px solid rgba(209, 213, 219, 0.8);
+      border-radius: 16px;
+      border: 1px solid rgba(209, 204, 192, 0.9);
       padding: 12px 14px 40px;
       font-size: 14px;
       font-family: inherit;
       outline: none;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.98),
-        rgba(255, 251, 254, 0.96)
-      );
-      box-shadow: inset 0 0 0 0 rgba(248, 113, 150, 0);
+      background: #ffffff;
       transition:
         border-color var(--transition-fast),
         box-shadow var(--transition-fast),
-        background var(--transition-fast),
         transform 0.12s ease-out;
     }
 
     textarea:focus {
-      border-color: rgba(248, 113, 150, 0.9);
+      border-color: var(--brand-green);
       box-shadow:
-        0 0 0 1px rgba(248, 113, 150, 0.25),
-        0 18px 40px rgba(248, 113, 150, 0.18);
+        0 0 0 1px rgba(52, 92, 74, 0.15),
+        0 12px 28px rgba(0, 0, 0, 0.04);
       transform: translateY(-1px);
     }
 
     textarea::placeholder {
-      color: #c4c4cf;
+      color: #b0aba0;
     }
 
     .typing-hint {
@@ -343,7 +279,7 @@
       right: 14px;
       bottom: 14px;
       font-size: 11px;
-      color: #9ca3af;
+      color: #b0aba0;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -355,7 +291,7 @@
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: #f9739a;
+      background: var(--brand-green);
       animation: pulse 1.2s ease-in-out infinite;
     }
 
@@ -367,7 +303,7 @@
 
     .hint {
       font-size: 11px;
-      color: #9ca3af;
+      color: #999489;
       margin-bottom: 8px;
     }
 
@@ -391,9 +327,9 @@
       font-size: 11px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(229, 231, 235, 0.9);
-      background: rgba(249, 250, 251, 0.9);
-      color: #4b5563;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #ffffff;
+      color: #4b4a46;
       cursor: pointer;
       transition:
         background var(--transition-fast),
@@ -404,49 +340,40 @@
     }
 
     .example:hover {
-      background: #fef2f7;
-      border-color: rgba(248, 113, 150, 0.55);
+      background: var(--brand-beige-soft);
+      border-color: var(--brand-green);
       transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(248, 113, 150, 0.22);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
     }
 
     button.primary {
       border: none;
-      border-radius: var(--radius-pill);
-      padding: 9px 20px;
+      border-radius: 14px;
+      padding: 8px 18px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      background-image: linear-gradient(135deg, #f9739a, #fbbfcd, #faccd7);
-      color: #1f2933;
+      background: var(--brand-green);
+      color: #ffffff;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow:
-        0 12px 28px rgba(248, 113, 150, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
       transition:
         transform 0.12s ease-out,
         box-shadow 0.12s ease-out,
-        filter 0.14s ease-out;
-    }
-
-    button.primary .sparkles {
-      font-size: 16px;
+        background-color 0.12s ease-out;
     }
 
     button.primary:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow:
-        0 16px 40px rgba(248, 113, 150, 0.38),
-        0 0 0 1px rgba(255, 255, 255, 0.7);
-      filter: brightness(1.03);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+      background: var(--brand-green-dark);
     }
 
     button.primary:active:not(:disabled) {
       transform: translateY(1px) scale(0.99);
-      box-shadow: 0 8px 18px rgba(248, 113, 150, 0.32);
-      filter: brightness(0.98);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
     }
 
     button.primary:disabled {
@@ -455,9 +382,13 @@
       box-shadow: none;
     }
 
+    .sparkles {
+      font-size: 16px;
+    }
+
     .status {
       font-size: 11px;
-      color: #6b7280;
+      color: #7b786f;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -467,7 +398,7 @@
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: #22c55e;
+      background: var(--brand-green);
     }
 
     .status-label {
@@ -480,67 +411,61 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .results-summary {
       font-size: 13px;
-      color: #4b5563;
+      color: #4b4a46;
     }
 
     .results-filters {
       font-size: 11px;
-      color: #6b7280;
+      color: #969189;
       text-align: right;
     }
 
     .results-debug {
       font-size: 11px;
-      color: #4b5563;
+      color: #4b4a46;
       margin-bottom: 8px;
       border-radius: 999px;
       padding: 4px 10px;
-      background: rgba(239, 246, 255, 0.9);
-      border: 1px dashed rgba(191, 219, 254, 0.8);
+      background: #f6f3ee;
+      border: 1px dashed rgba(228, 225, 219, 0.9);
     }
 
     .results-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
 
     .bouquet-card {
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 22px;
-      border: 1px solid rgba(243, 244, 246, 0.9);
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(228, 225, 219, 0.9);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
       transition:
-        transform 0.18s ease-out,
-        box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out,
-        background 0.18s ease-out;
+        transform 0.16s ease-out,
+        box-shadow 0.16s ease-out,
+        border-color 0.16s ease-out;
     }
 
     .bouquet-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 22px 50px rgba(148, 163, 184, 0.45);
-      border-color: rgba(248, 113, 150, 0.42);
-      background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.98),
-        rgba(255, 246, 252, 0.98)
-      );
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      border-color: rgba(52, 92, 74, 0.35);
     }
 
     .bouquet-image-wrapper {
       position: relative;
       height: 170px;
-      background: radial-gradient(circle at top, #fed7e2, #e0f2fe);
+      background: #f6f3ee;
       overflow: hidden;
     }
 
@@ -554,30 +479,29 @@
     }
 
     .bouquet-card:hover .bouquet-image {
-      transform: scale(1.04);
+      transform: scale(1.03);
     }
 
     .bouquet-chip {
       position: absolute;
       top: 10px;
       left: 10px;
-      padding: 4px 10px;
-      border-radius: 999px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      color: #4b5563;
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      color: #4b4a46;
     }
 
     .bouquet-chip--ai {
       right: 10px;
       left: auto;
-      background: linear-gradient(120deg, rgba(251, 191, 36, 0.12), rgba(248, 113, 150, 0.3));
-      color: #7c2d12;
-      border-color: rgba(251, 191, 36, 0.5);
+      background: rgba(250, 247, 242, 0.98);
+      border-color: rgba(52, 92, 74, 0.35);
+      color: var(--brand-green-dark);
     }
 
     .bouquet-card-body {
@@ -598,6 +522,7 @@
       font-family: "Playfair Display", "Times New Roman", serif;
       font-size: 15px;
       line-height: 1.2;
+      color: #262723;
     }
 
     .bouquet-price-block {
@@ -611,25 +536,26 @@
     .bouquet-price {
       font-weight: 600;
       font-size: 14px;
+      color: var(--brand-green-dark);
     }
 
     .score-line {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: #6b7280;
+      color: #7b786f;
     }
 
     .score-dot {
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: radial-gradient(circle, #f9739a, #a855f7);
+      background: var(--brand-green);
     }
 
     .bouquet-desc {
       font-size: 12px;
-      color: #6b7280;
+      color: #777268;
     }
 
     .bouquet-tags-row {
@@ -643,44 +569,35 @@
       font-size: 10px;
       padding: 2px 7px;
       border-radius: 999px;
-      background: #f3f4f6;
-      color: #6b7280;
+      border: 1px solid rgba(228, 225, 219, 0.9);
+      background: #f6f3ee;
+      color: #55524b;
     }
 
-    .tag--flowers {
-      background: rgba(253, 242, 248, 0.95);
-      color: #9d174d;
-    }
-
-    .tag--style {
-      background: rgba(237, 233, 254, 0.96);
-      color: #4c1d95;
-    }
-
-    .tag--occasion {
-      background: rgba(255, 247, 237, 0.96);
-      color: #7c2d12;
+    .tag--green {
+      background: #e6ede7;
+      color: var(--brand-green-dark);
+      border-color: #d1ddcf;
     }
 
     .bouquet-ai-row {
-      margin-top: 5px;
+      margin-top: 4px;
       display: flex;
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      color: #4c1d95;
+      color: #5c574f;
     }
 
     .ai-badge {
       padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(237, 233, 254, 0.9);
-      border: 1px solid rgba(221, 214, 254, 0.9);
-      backdrop-filter: blur(16px);
+      border-radius: var(--radius-pill);
+      background: #f6f3ee;
+      border: 1px solid rgba(228, 225, 219, 0.9);
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #5b21b6;
+      color: #5c574f;
       white-space: nowrap;
     }
 
@@ -692,38 +609,38 @@
 
     .card-composition {
       font-size: 11px;
-      color: #4b5563;
+      color: #5c574f;
       margin-top: 6px;
       padding-top: 5px;
-      border-top: 1px dashed #e5e7eb;
+      border-top: 1px dashed rgba(228, 225, 219, 0.9);
       display: none;
     }
 
     .composition-hint {
       font-size: 10px;
-      color: #9ca3af;
+      color: #a09a8f;
       margin-top: 2px;
     }
 
     .empty-state {
       font-size: 13px;
-      color: #6b7280;
+      color: #6f6a61;
       padding: 9px 10px;
-      border-radius: 16px;
-      border: 1px dashed rgba(209, 213, 219, 0.9);
-      background: rgba(249, 250, 251, 0.95);
+      border-radius: 14px;
+      border: 1px dashed rgba(228, 225, 219, 0.9);
+      background: #faf7f2;
       margin-top: 8px;
     }
 
     .footer-note {
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 11px;
-      color: #9ca3af;
+      color: #a09a8f;
       line-height: 1.5;
     }
 
     .footer-note strong {
-      color: #6b21a8;
+      color: var(--brand-green-dark);
       font-weight: 600;
     }
 
@@ -731,39 +648,41 @@
       font-size: 11px;
       padding: 3px 9px;
       border-radius: 999px;
-      background: rgba(243, 232, 255, 0.95);
-      color: #6b21a8;
+      background: #f6f3ee;
+      color: #5c574f;
+      border: 1px solid rgba(228, 225, 219, 0.9);
     }
   </style>
 </head>
 <body>
-  <div class="floral-orb floral-orb--pink"></div>
-  <div class="floral-orb floral-orb--lavender"></div>
-  <div class="floral-orb floral-orb--peach"></div>
-
   <div class="app-shell">
-    <header class="app-header">
+    <header class="topbar">
       <div class="brand">
-        <div class="brand-mark">🌸</div>
+        <div class="brand-mark">KB</div>
         <div class="brand-titles">
-          <div class="brand-name">Atelier Bouquet</div>
-          <div class="brand-tagline">Emotional AI flower matching</div>
+          <div class="brand-name">КупиБукет</div>
+          <div class="brand-tagline">AI подбор букета</div>
         </div>
       </div>
-      <div class="header-pill">
-        <span class="header-pill-dot"></span>
-        <span>AI подбор · Boutique experience</span>
+      <div class="topbar-right">
+        <div class="topbar-phone">
+          Для помощи с заказом: <strong>8 800 000‑00‑00</strong>
+        </div>
+        <div class="ai-pill">
+          <span class="ai-pill-dot"></span>
+          <span>AI сервис купибукет</span>
+        </div>
       </div>
     </header>
 
     <section class="hero">
       <h1 class="hero-title">
-        Идеальный букет, который чувствует <span>повод, стиль и эмоцию</span>.
+        Найдём букет, который по‑настоящему подойдёт
+        <span class="hero-highlight">по поводу и характеру человека.</span>
       </h1>
       <p class="hero-subtitle">
-        Опишите момент: кому, за что вы дарите, какой характер у человека и как хотите,
-        чтобы он себя почувствовал. Сервис подберёт <strong>премиальные букеты</strong> с объяснением,
-        почему именно они подходят.
+        Опишите, кому вы дарите, за что хотите поблагодарить и какого настроения ждёте от букета.
+        Мы подберём варианты из ассортимента КупиБукет и покажем, почему они подходят.
       </p>
     </section>
 
@@ -772,23 +691,23 @@
       <section class="panel">
         <div class="panel-header">
           <div class="panel-title">Запрос клиента</div>
-          <div class="panel-chip">Natural language → Floral intent</div>
+          <div class="panel-chip">Текст → параметры подбора</div>
         </div>
 
         <div class="input-label">Опишите, какой букет нужен:</div>
         <div class="input-wrapper">
           <textarea
             id="query"
-            placeholder="Нежный букет для подруги на 25 лет, любит пионы и розовый, бюджет до 8 000 ₽..."
+            placeholder="Нежный букет для жены на годовщину, 32 года, любит пастельные розы и пионы, бюджет до 7 000 ₽..."
           ></textarea>
           <div class="typing-hint" id="typingHint">
             <span class="typing-dot"></span>
-            <span id="typingHintText">Сервис понимает живую речь…</span>
+            <span id="typingHintText">Можно писать, как в переписке с менеджером…</span>
           </div>
         </div>
         <p class="hint">
-          Можно писать, как в переписке: повод, кому, возраст, любимые цветы,
-          настроение подарка и примерный бюджет.
+          Подходит любая формулировка: кому, по какому поводу, возраст, любимые или нежелательные цветы,
+          желаемое впечатление и примерный бюджет.
         </p>
 
         <div class="input-footer">
@@ -805,19 +724,19 @@
         <div class="examples">
           <button
             class="example"
-            data-example="Нежный букет для девушки на годовщину, 24 года, любит пионы и светло-розовые тона, бюджет до 7000 ₽"
+            data-example="Романтичный букет для девушки на 23 года, любит что-то нежное и не слишком вычурное, до 5 000 ₽"
           >
             Романтичный для неё
           </button>
           <button
             class="example"
-            data-example="Стильный минималистичный букет для коллеги на день рождения, до 4000 ₽, без красных роз"
+            data-example="Строгий, но живой букет для коллеги на день рождения, до 4 000 ₽, без красных роз"
           >
             Минимализм для коллеги
           </button>
           <button
             class="example"
-            data-example="Яркий букет на юбилей мамы, 55 лет, любит тюльпаны и пастельные цвета, бюджет 10–12 тысяч"
+            data-example="Яркий букет для мамы на юбилей 55 лет, любит тюльпаны и тёплые оттенки, 10–12 тысяч"
           >
             Юбилей для мамы
           </button>
@@ -828,7 +747,7 @@
       <section class="panel panel--results">
         <div class="panel-header">
           <div class="panel-title">Рекомендации AI</div>
-          <div class="panel-chip">Curated bouquet selection</div>
+          <div class="panel-chip">Подбор по каталогу КупиБукет</div>
         </div>
 
         <div class="results-header">
@@ -836,7 +755,7 @@
             Букеты ещё не подобраны — опишите запрос слева.
           </div>
           <div id="resultsFilters" class="results-filters">
-            Фильтрация по: цветы, повод, стиль, получатель, бюджет
+            Учитываем: цветы, повод, стиль, получателя, бюджет
           </div>
         </div>
 
@@ -845,15 +764,14 @@
         <div id="results" class="results-grid"></div>
 
         <div id="emptyState" class="empty-state" style="display: none;">
-          По этому запросу пока ничего не нашли. Попробуйте добавить любимые цветы,
-          повод, бюджет и для кого букет (например, «романтичный букет для девушки на свидание до 4000 рублей»).
+          По этому запросу ничего не найдено. Попробуйте указать любимые или нежелательные цветы,
+          повод и примерный бюджет — так подбор будет точнее.
         </div>
 
         <div class="footer-note">
-          <span class="pill">AI atelier inside</span><br />
-          В продакшене здесь работает <strong>языковая модель и ранжирование каталога</strong>:
-          запрос переводится в параметры (повод, стиль, цветы, бюджет), считается близость к букетам
-          и возвращается объяснимый рейтинг. Со временем система учится на реальных заказах.
+          <span class="pill">Как работает AI-сервис КупиБукет</span><br />
+          Сервис переводит текст запроса в параметры подбора (повод, стиль, цветы, бюджет, получатель)
+          и на их основе находит букеты в каталоге. По мере накопления заказов качество рекомендаций растёт.
         </div>
       </section>
     </main>
@@ -868,23 +786,12 @@
   const resultsFilters = document.getElementById("resultsFilters");
   const parsedQueryDebug = document.getElementById("parsedQueryDebug");
   const typingHint = document.getElementById("typingHint");
-  const typingHintText = document.getElementById("typingHintText");
-  const floralOrbs = document.querySelectorAll(".floral-orb");
 
-  // лёгкий параллакс фоновых элементов
-  window.addEventListener("scroll", () => {
-    const y = window.scrollY || 0;
-    floralOrbs.forEach((orb, index) => {
-      const factor = 0.06 + index * 0.02;
-      orb.style.transform = `translate3d(0, ${y * factor}px, 0)`;
-    });
-  });
-
-  // анимация "набирающегося" примера в плейсхолдере
+  // анимация "набирающегося" плейсхолдера
   const samplePlaceholders = [
-    "Нежный букет на день рождения подруги, любит пионы и пастель…",
-    "Минималистичный букет для коллеги, без красных роз, до 4 000 ₽…",
-    "Яркий, но элегантный букет для мамы, 55 лет, бюджет 10–12 тысяч…"
+    "Нежный букет для жены на годовщину, любит пастельные розы и пионы…",
+    "Стильный букет для коллеги, ничего слишком яркого, до 4 000 ₽…",
+    "Яркий, но аккуратный букет для мамы на юбилей, бюджет 10–12 тысяч…"
   ];
 
   let typingIdx = 0;
@@ -906,7 +813,7 @@
       }
       const slice = text.slice(0, Math.min(charIdx, text.length));
       queryInput.placeholder = slice || "Опишите момент, для которого нужен букет…";
-    }, 90);
+    }, 95);
   }
 
   function stopTypingPlaceholder() {
@@ -977,7 +884,7 @@
       resultsFilters.textContent = "Учитываем: " + filtersUsed.join(" · ");
     } else {
       resultsFilters.textContent =
-        "Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет";
+        "Учитываем: цветы, повод, стиль, получателя, бюджет";
     }
 
     if (parsedQuery) {
@@ -1039,7 +946,7 @@
       if (typeof b.score === "number") {
         scoreLabel.textContent = "подходит по запросу";
       } else {
-        scoreLabel.textContent = "предложение ателье";
+        scoreLabel.textContent = "предложение каталога";
       }
       scoreLine.appendChild(scoreDot);
       scoreLine.appendChild(scoreLabel);
@@ -1059,21 +966,21 @@
 
       if (b.flowers && b.flowers.length) {
         const tagFlowers = document.createElement("span");
-        tagFlowers.className = "tag tag--flowers";
+        tagFlowers.className = "tag tag--green";
         tagFlowers.textContent = (b.flowers || []).join(", ");
         tagsRow.appendChild(tagFlowers);
       }
 
       if (b.style && b.style.length) {
         const tagStyle = document.createElement("span");
-        tagStyle.className = "tag tag--style";
+        tagStyle.className = "tag";
         tagStyle.textContent = (b.style || []).join(", ");
         tagsRow.appendChild(tagStyle);
       }
 
       if (b.occasions && b.occasions.length) {
         const tagOcc = document.createElement("span");
-        tagOcc.className = "tag tag--occasion";
+        tagOcc.className = "tag";
         tagOcc.textContent = b.occasions[0];
         tagsRow.appendChild(tagOcc);
       }
@@ -1085,7 +992,7 @@
       aiBadge.textContent = "Почему подходит";
       const aiText = document.createElement("span");
       aiText.className = "ai-reason-text";
-      aiText.textContent = b.reason || "подчёркивает стиль, настроение и бюджет вашего запроса";
+      aiText.textContent = b.reason || "учитывает стиль, повод и бюджет вашего запроса";
       aiRow.appendChild(aiBadge);
       aiRow.appendChild(aiText);
 
@@ -1157,7 +1064,7 @@
       resultsContainer.innerHTML = "";
       emptyState.style.display = "none";
       resultsFilters.textContent =
-        "Фильтрация по: цветы, повод, получатель, стиль, возраст, бюджет";
+        "Учитываем: цветы, повод, стиль, получателя, бюджет";
       parsedQueryDebug.textContent = "";
       parsedQueryDebug.style.display = "none";
       return;
