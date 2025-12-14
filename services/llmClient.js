@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-const DEFAULT_MODEL = process.env.LLM_MODEL || 'qwen2.5:7b-instruct';
+const DEFAULT_MODEL = process.env.LLM_MODEL || 'gemma2:9b';
 const DEFAULT_COMMAND = process.env.LLM_COMMAND || 'ollama';
 const DEFAULT_ARGS = process.env.LLM_ARGS
   ? process.env.LLM_ARGS.split(/\s+/).filter(Boolean)
